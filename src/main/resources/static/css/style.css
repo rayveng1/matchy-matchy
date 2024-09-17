@@ -1,0 +1,8 @@
+:root{
+    --aaa-blue: #6379A6;
+    --aaa-red:#DC4556;
+}
+
+.blue{
+    background-color: var(--aaa-blue);
+}
