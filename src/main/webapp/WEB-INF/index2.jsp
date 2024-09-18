@@ -20,13 +20,13 @@
 </head>
 <body>
 <header class="px-2 py-2">
-    <img id="AAA_logo" src="/assets/AAA-logo.png" alt="AAA Logo" style="max-width: 8rem; max-height: 8rem">
+    <a href="https://ace.aaa.com" target="_blank"><img id="AAA_logo" src="/assets/AAA-logo.png" alt="AAA Logo" style="max-width: 8rem; max-height: 8rem"></a>
 </header>
 <main class="d-flex">
     <div class="blue d-flex w-100" style="max-height: fit-content">
         <section class="container px-3 py-3">
             <div class="flex-column mx-auto" style="width:fit-content">
-            <h1 style="font-size: xx-large; color:white; width:fit-content">Explore <span style="color:var(--aaa-red)">AAA</span> Near You</h1>
+            <h1 style="font-size: xx-large; color:white; width:fit-content">Explore AAA Near You</h1>
             <img class="mb-5" src="/assets/map.png" alt="Map Logo" style="max-width: 100%; max-height: 100%;  border-radius:1%">
             </div>
         </section>
