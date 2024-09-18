@@ -6,3 +6,23 @@
 .blue{
     background-color: var(--aaa-blue);
 }
+
+.details{
+    cursor:pointer;
+    width: 1rem;
+    border:solid .01rem lightgrey;
+}
+
+.details-hidden {
+    width: 0;
+}
+
+@media only screen and (max-width: 600px) {
+    #AAA_logo {
+        max-width: 6rem !important;
+        max-height: 6rem !important;
+        display:block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}

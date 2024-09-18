@@ -13,6 +13,11 @@
 <link rel="stylesheet" href="/css/style.css"/>
 <!-- For any Bootstrap that uses JS -->
 <script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+<script>
+    document.getElementById('sidebarCollapse').addEventListener('click', function () {
+        document.getElementById('sidebar').classList.toggle('collapsed');
+    });
+</script>
 <html>
 <head>
     <title>Index</title>
