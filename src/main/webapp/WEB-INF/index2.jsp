@@ -13,31 +13,51 @@
 <link rel="stylesheet" href="/css/style.css"/>
 <!-- For any Bootstrap that uses JS -->
 <script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+<script src="/javascript/script.js"></script>
 <html>
 <head>
     <title>Index</title>
 </head>
 <body>
-<header class="px-2 py-4">
-    <img src="/assets/AAA-logo.png" alt="AAA Logo" style="max-width: 8rem; max-height: 8rem">
+<header class="px-2 py-2">
+    <img id="AAA_logo" src="/assets/AAA-logo.png" alt="AAA Logo" style="max-width: 8rem; max-height: 8rem">
 </header>
 <main class="d-flex">
-    <div class="blue px-5 py-2 col-9">
-        <section class="container mx-auto">
-            <h1 style="font-size: xx-large; color:white;">Explore <span style="color:var(--aaa-red)">AAA</span> Near You</h1>
-            <img class="mb-5" src="/assets/map.png" alt="Map Logo" style="max-width: 100%; max-height: 100%">
+    <div class="blue d-flex w-100" style="max-height: fit-content">
+        <section class="container px-3 py-3">
+            <div class="flex-column mx-auto" style="width:fit-content">
+            <h1 style="font-size: xx-large; color:white; width:fit-content">Explore <span style="color:var(--aaa-red)">AAA</span> Near You</h1>
+            <img class="mb-5" src="/assets/map.png" alt="Map Logo" style="max-width: 100%; max-height: 100%;  border-radius:1%">
+            </div>
         </section>
+<%--        <div id="sidebarIndicator" class="h-100 d-flex justify-content-between details-hidden" style="flex-direction: column; border-radius:1%; background-color:white" onclick="showSidebar()">--%>
+<%--            <span class="fw-bolder"><</span>--%>
+<%--            <span class="fw-bolder"><</span>--%>
+<%--            <span class="fw-bolder"><</span>--%>
+<%--            <span class="fw-bolder"><</span>--%>
+<%--            <span class="fw-bolder"><</span>--%>
+<%--        </div>--%>
+        <button class="btn btn-secondary btn-sm" type="button" data-bs-toggle="collapse" data-bs-target="#collapseWidthExample" aria-expanded="false" aria-controls="collapseWidthExample" style="width:.1rem" onclick="toggleArrow(this)">
+            <
+        </button>
+        <div style="min-height: 120px; max-height: 100%">
+            <div class="collapse collapse-horizontal" id="collapseWidthExample" style="height: 100%">
+                <div class="card card-body" style="width: 300px; height: 100%">
+                        <div style="height:fit-content">
+                            <img src="/assets/canes.png" alt="Canes logo!" style="object-fit: contain; width:100%">
+                            <h3>Raising Canes</h3>
+                            <h5 style="font-weight: 450">Rating: 4.6</h5>
+                            <p>Fast-food chain specializing in fried chicken fingers, crinkle-cut fries & Texas toast.</p>
+                            <h5 style="font-weight: 450">Address: 7345 Gaston Ave, Dallas, TX, 75214</h5>
+                            <h5 style="font-weight: 450">Phone: (214) 321-3220</h5>
+                            <h5 style="font-weight: 450">Website: <a href="">raisingcanes.com</a></h5>
+                            <h5 style="height: fit-content; width: 100%; font-weight: 450">Google Maps: <a href="">https://maps.google.com/?cid=7851923780944608967</a></h5>
+                        </div>
+                </div>
+            </div>
+        </div>
+
     </div>
-    <aside class="p-2 col-3" style="border:solid .01rem lightgrey; border-radius:1%; background-color:white">
-        <img src="/assets/canes.png" alt="Canes logo!" style="object-fit: contain; width: 100%">
-        <h3>Raising Canes</h3>
-        <h5 style="font-weight: 450">Rating: 4.6</h5>
-        <p>Fast-food chain specializing in fried chicken fingers, crinkle-cut fries & Texas toast.</p>
-        <h5 style="font-weight: 450">Address: 7345 Gaston Ave, Dallas, TX, 75214</h5>
-        <h5 style="font-weight: 450">Phone: (214) 321-3220</h5>
-        <h5 style="font-weight: 450">Website: <a href="">raisingcanes.com</a></h5>
-        <h5 style="height: fit-content; width: 100%; font-weight: 450">Google Maps: <a href="">https://maps.google.com/?cid=7851923780944608967</a></h5>
-    </aside>
 </main>
 <section>
     <div class="container p-5">
