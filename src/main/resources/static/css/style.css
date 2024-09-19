@@ -26,3 +26,33 @@
         margin-right: auto;
     }
 }
+
+#AAA_logo_middle {
+    display:block;
+    margin-left: auto;
+    margin-right: auto;
+    cursor:pointer;
+}
+
+.hidden {
+    display:none;
+}
+
+.unhidden {
+    display:block;
+}
+
+@keyframes pokePulse {
+    0%, 100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-5%);
+        opacity: .9;
+    }
+}
+
+.animate-pokePulse {
+    animation: pokePulse 1.7s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
