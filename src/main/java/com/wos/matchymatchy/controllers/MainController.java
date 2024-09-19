@@ -13,7 +13,8 @@ public class MainController {
     public MainController() { }
 
     @GetMapping("/")
-    public String index() {
+    public String index(HttpSession session) {
+
         return "index2.jsp";
     }
 
