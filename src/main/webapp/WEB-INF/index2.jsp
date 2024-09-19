@@ -79,9 +79,43 @@
     <div class="container p-5">
         <div class="mx-auto mb-5" style="width:fit-content">
             <h3>Categories</h3>
-            <p class="mb-4 mx-auto" style="width:fit-content; color: dimgray">11 Places Found!</p>
+            <c:if test="${places.size() == 1}">
+            <p class="mb-4 mx-auto" style="width:fit-content; color: dimgray">1 Place Found!</p>
+            </c:if>
+            <c:if test="${places.size() != 1}">
+                <p class="mb-4 mx-auto" style="width:fit-content; color: dimgray">${places.size()} Places Found!</p>
+            </c:if>
         </div>
         <div class="accordion" id="accordionExample">
+
+        <c:forEach var="category" items="${categories}">
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+
+                <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne"
+                        style="background-color:var(--aaa-red); color:white">
+                    ${category}
+                </button>
+                </h2>
+                <c:set var="counter" value="0" />
+                <c:forEach var="place" items="${categories.places}">
+                    <div id="collapse${counter}" class="accordion-collapse collapse show" data-bs-parent="#accordionExample"
+                         style="background-color:var(--aaa-blue); color:white">
+                        <c:set var="counter" value="${counter + 1}" />
+
+                        <div class="accordion-body">
+                            <strong class="text-start">AAA Travel Agent</strong>
+                            <span class="text-end">8 miles away</span>
+                        </div>
+                    </div>
+                </c:forEach>
+            </div>
+
+        </c:forEach>
+        </div>
+
+        <div class="accordion" id="accordionExample1">
             <div class="accordion-item">
                 <h2 class="accordion-header">
                     <button class="accordion-button" type="button" data-bs-toggle="collapse"
