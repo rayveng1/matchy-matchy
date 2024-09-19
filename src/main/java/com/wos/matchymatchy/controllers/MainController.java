@@ -20,8 +20,15 @@ public class MainController {
     @PostMapping("/savelocation")
     public String location(@RequestBody String request, HttpSession session) {
         JSONObject jsonObject = new JSONObject(request);
-        session.setAttribute("latitude", jsonObject.get("Latitude"));
-        session.setAttribute("latitude", jsonObject.get("Longitude"));
+        System.out.println(jsonObject.get("Latitude") == JSONObject.NULL);
+        if (jsonObject.get("Latitude") == JSONObject.NULL) {
+            System.out.println(jsonObject.get("Latitude"));
+            session.removeAttribute("latitude");
+            session.removeAttribute("longitude");
+        } else {
+            session.setAttribute("latitude", jsonObject.get("Latitude"));
+            session.setAttribute("longitude", jsonObject.get("Longitude"));
+        }
         return "index2.jsp";
     }
 
