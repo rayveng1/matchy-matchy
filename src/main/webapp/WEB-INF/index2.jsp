@@ -75,6 +75,28 @@
 
     </div>
 </main>
+<c:forEach var="item" items="${response.places}">
+    <p class="lead">Name: ${item.displayName.text}</p>
+    <p class="card-text" id="error"></p>
+    <p class="lead">Latitude: ${item.location.latitude}</p>
+    <p class="card-text" id="error"></p>
+    <p class="lead">Longitude: ${item.location.longitude}</p>
+    <p class="card-text" id="error"></p>
+    <p class="lead">Rating: ${item.rating}</p>
+    <p class="card-text" id="error"></p>
+    <p class="lead">Number: ${item.internationalPhoneNumber}</p>
+    <p class="card-text" id="error"></p>
+    <p class="lead">Summary: ${item.editorialSummary.text}</p>
+    <p class="card-text" id="error"></p>
+    <p class="lead">website URL: ${item.websiteUri}</p>
+    <p class="card-text" id="error"></p>
+    <p class="lead">Google Maps URL: ${item.googleMapsUri}</p>
+    <p class="card-text" id="error"></p>
+    <p class="lead">hours: ${item.currentOpeningHours.weekdayDescriptions}</p>
+    <p class="card-text" id="error"></p>
+    <p class="lead">Types: ${item.types}</p>
+    <p class="card-text" id="error"></p>
+</c:forEach>
 <section>
     <div class="container p-5">
         <div class="mx-auto mb-5" style="width:fit-content">
