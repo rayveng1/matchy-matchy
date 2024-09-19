@@ -5,18 +5,73 @@ function toggleArrow(element) {
 
 const successCallback = (position) => {
     sendLocationToServer(position.coords.latitude, position.coords.longitude);
+    localStorage.setItem("locationCookie", "true");
 };
 
 const errorCallback = (error) => {
+    localStorage.setItem("locationCookie", "false")
+    sendLocationToServer(null, null)
     console.log(error);
 };
 
-function getCurrentLocation() {
-    // Check if location has been retrieved already
-    if (!localStorage.getItem("locationFetched")) {
-        navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
+async function getCurrentLocation() {
+
+    // If the locationCookie isn't set yet.
+    if (!localStorage.getItem("locationCookie")) {
+        const positionPromise = new Promise((resolve, reject) => {
+            navigator.geolocation.getCurrentPosition(resolve, reject);
+        });
+
+        try {
+            const position = await positionPromise;
+            successCallback(position); // Call the success callback with the position
+        } catch (error) {
+            errorCallback(error); // Call the error callback with the error
+        }
+
+        // User accepted to share location
+        console.log("bye - " + localStorage.getItem("locationCookie"));
+        if (localStorage.getItem("locationCookie") === "true") {
+            console.log("hello");
+            window.location.reload();
+        }
+    } else {// If the locationCookie is set.
+        if (localStorage.getItem("locationCookie") === "true"){
+            const positionPromise = new Promise((resolve, reject) => {
+                navigator.geolocation.getCurrentPosition(resolve, reject);
+            });
+
+            try {
+                const position = await positionPromise;
+                successCallback(position); // Call the success callback with the position
+            } catch (error) {
+                errorCallback(error); // Call the error callback with the error
+            }
+
+            if (localStorage.getItem("locationCookie") === "false"){
+                window.location.reload();
+            }
+        } else {
+            const positionPromise = new Promise((resolve, reject) => {
+                navigator.geolocation.getCurrentPosition(resolve, reject);
+            });
+
+            try {
+                const position = await positionPromise;
+                successCallback(position); // Call the success callback with the position
+            } catch (error) {
+                errorCallback(error); // Call the error callback with the error
+            }
+
+            if (localStorage.getItem("locationCookie") === "true"){
+                window.location.reload();
+            }
+        }
     }
+
+
 }
+
 
 function sendLocationToServer(lat, lon) {
     console.log(`lat: ${lat}`);
@@ -28,8 +83,6 @@ function sendLocationToServer(lat, lon) {
     xhr.onreadystatechange = function () {
         if (xhr.readyState === 4 && xhr.status === 200) {
             // Mark that location has been fetched and prevent reload loop
-            localStorage.setItem("locationFetched", "true");
-            window.location.reload();
         }
     };
 
