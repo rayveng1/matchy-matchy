@@ -92,3 +92,11 @@ function sendLocationToServer(lat, lon) {
 
 // Call this function on page load or based on user action
 getCurrentLocation();
+
+function promptUserToChange(){
+    let el = document.getElementsByClassName("hidden");
+    if (el !== null){
+        el[0].classList.remove("hidden");
+        // el[0].classList.add("unhidden")
+    }
+}

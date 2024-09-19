@@ -31,10 +31,14 @@
     <div class="blue d-flex w-100" style="max-height: fit-content">
         <section class="container px-3 py-3">
             <div class="flex-column mx-auto" style="width:fit-content">
-                <h1 style="font-size: xx-large; color:white; width:fit-content">Explore AAA Near You</h1>
+                <h1 style="font-size: xx-large; color:white; width:fit-content; text-shadow: 2px 2px 1px black;">Explore AAA Near You</h1>
                 <c:if test="${latitude == null}">
-                    <img id="AAA_logo_middle" class="animation-wiggle animate-wiggle" src="/assets/acsc.svg" alt="AAA Logo"
-                         style="max-width: 10rem; max-height: 10rem">
+                    <div style="margin: 8rem auto">
+
+                    <img id="AAA_logo_middle" class="animate-pokePulse" src="/assets/acsc.svg" alt="AAA Logo"
+                         style="max-width: 10rem; max-height: 8rem;" onclick="promptUserToChange()">
+                        <p class="mx-auto text-warning fst-italic mt-3 hidden" style="width: fit-content">Please enable your location sharing!</p>
+                    </div>
                 </c:if>
                 <c:if test="${latitude != null}">
                 <img class="mb-5" src="/assets/map.png" alt="Map Logo"
