@@ -11,6 +11,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 @Controller
 public class MainController {
 
@@ -30,6 +34,16 @@ public class MainController {
 
         ApiResponse response = apiService.getApiResponse(location);
         model.addAttribute("response", response);
+
+
+
+//     public String index(Model model, HttpSession session) {
+//         ArrayList<Integer> list = new ArrayList<>();
+//         list.add(2);
+//         list.add(4);
+//         list.add(6);
+//         model.addAttribute("categories", list);
+// >>>>>>> main
         return "index2.jsp";
     }
 
@@ -48,5 +62,48 @@ public class MainController {
         return "index2.jsp";
     }
 
+//    public HashMap<String, List<Place>> getCategorizedPlaces(List<Place> places){
+//        HashMap<String, List<Place>> hm = new HashMap<>();
+//
+//        for (Place place : places){
+//            String category = getMainCategory(place.Types);
+//            if (!hm.containsKey(category)){
+//                hm.put(category, new ArrayList<>().add(place));
+//            } else {
+//                hm.get(category).add(place);
+//            }
+//        }
+//
+//        return hm;
+//    }
 
+    public static String getMainCategory(List<String> categories){
+        for (String category : categories) {
+            switch (category) {
+                case "department_store":
+                    return "department_store";
+                case "food":
+                    return "food";
+                case "car":
+                    return "car";
+                case "finance":
+                    return "finance";
+                case "insurance":
+                    return "insurance";
+                case "entertainment":
+                    return "entertainment";
+                case "travel":
+                    return "travel";
+                case "hotel_lodging":
+                    return "hotel_lodging";
+                case "fitness_centers":
+                    return "fitness_centers";
+                case "theme_parks":
+                    return "theme_parks";
+                default:
+                    return "unknown_category"; // Optional: Handle any unknown category
+            }
+        }
+        return "unknown_category";
+    }
 }

@@ -1,6 +1,6 @@
 :root{
     --aaa-blue: #6379A6;
-    --aaa-red:#DC4556;
+    --aaa-red: #DC4556;
 }
 
 .blue{
@@ -8,9 +8,9 @@
 }
 
 .details{
-    cursor:pointer;
+    cursor: pointer;
     width: 1rem;
-    border:solid .01rem lightgrey;
+    border: solid 0.01rem lightgrey;
 }
 
 .details-hidden {
@@ -21,11 +21,30 @@
     #AAA_logo {
         max-width: 6rem !important;
         max-height: 6rem !important;
-        display:block;
+        display: block;
         margin-left: auto;
         margin-right: auto;
     }
 }
+
+#map {
+    height: 100%;
+}
+
+/*
+ * Optional: Makes the sample page fill the window.
+ */
+html,
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+
+
+
+
 
 #AAA_logo_middle {
     display:block;
@@ -55,4 +74,23 @@
 
 .animate-pokePulse {
     animation: pokePulse 1.7s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.map-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.responsive-map {
+    width: 100%;
+    height: 500px; /* Fixed height */
+    max-width: 1200px;
+    border-radius: 1%;
+}
+
+@media (max-width: 1200px) {
+    .responsive-map {
+        width: 100%; /* Adjust the width responsively */
+    }
 }
