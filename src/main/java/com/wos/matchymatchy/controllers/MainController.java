@@ -1,5 +1,8 @@
 package com.wos.matchymatchy.controllers;
 
+import com.wos.matchymatchy.models.ApiResponse;
+import com.wos.matchymatchy.models.Location;
+import com.wos.matchymatchy.services.ApiService;
 import jakarta.servlet.http.HttpSession;
 import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
@@ -15,18 +18,32 @@ import java.util.List;
 @Controller
 public class MainController {
 
-    public MainController() { }
+    private final ApiService apiService;
+
+    public MainController(ApiService apiService) {
+        this.apiService = apiService;
+    }
 
     @GetMapping("/")
+    public String index(HttpSession session, Model model) throws Exception {
+
+        double lat = (double) session.getAttribute("latitude");
+        double lng = (double) session.getAttribute("longitude");
+
+        Location location = new Location(lat, lng);
+
+        ApiResponse response = apiService.getApiResponse(location);
+        model.addAttribute("response", response);
 
 
 
-    public String index(Model model, HttpSession session) {
-        ArrayList<Integer> list = new ArrayList<>();
-        list.add(2);
-        list.add(4);
-        list.add(6);
-        model.addAttribute("categories", list);
+//     public String index(Model model, HttpSession session) {
+//         ArrayList<Integer> list = new ArrayList<>();
+//         list.add(2);
+//         list.add(4);
+//         list.add(6);
+//         model.addAttribute("categories", list);
+// >>>>>>> main
         return "index2.jsp";
     }
 
