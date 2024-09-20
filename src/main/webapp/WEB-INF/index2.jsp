@@ -50,19 +50,10 @@
           >
             <gmp-advanced-marker
                     position="${latitude},${longitude}"
-                    title="My location"
+                    title="Seattle, WA"
             ></gmp-advanced-marker>
-
-              <c:forEach var="marker" items="${response.places}">
-                  <gmp-advanced-marker
-                          position="${marker.location.latitude},${marker.location.longitude}"
-                          title="${marker.displayName.text}"
-                          icon="https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png"
-                  ></gmp-advanced-marker>
-              </c:forEach>
           </gmp-map>
         </c:if>
-          <div id="map"></div>
       </div>
     </section>
 
@@ -95,28 +86,28 @@
 
   </div>
 </main>
-<%--<c:forEach var="item" items="${response.places}">--%>
-<%--    <p class="lead">Name: ${item.displayName.text}</p>--%>
-<%--    <p class="card-text" id="error"></p>--%>
-<%--    <p class="lead">Latitude: ${item.location.latitude}</p>--%>
-<%--    <p class="card-text" id="error"></p>--%>
-<%--    <p class="lead">Longitude: ${item.location.longitude}</p>--%>
-<%--    <p class="card-text" id="error"></p>--%>
-<%--    <p class="lead">Rating: ${item.rating}</p>--%>
-<%--    <p class="card-text" id="error"></p>--%>
-<%--    <p class="lead">Number: ${item.internationalPhoneNumber}</p>--%>
-<%--    <p class="card-text" id="error"></p>--%>
-<%--    <p class="lead">Summary: ${item.editorialSummary.text}</p>--%>
-<%--    <p class="card-text" id="error"></p>--%>
-<%--    <p class="lead">website URL: ${item.websiteUri}</p>--%>
-<%--    <p class="card-text" id="error"></p>--%>
-<%--    <p class="lead">Google Maps URL: ${item.googleMapsUri}</p>--%>
-<%--    <p class="card-text" id="error"></p>--%>
-<%--    <p class="lead">hours: ${item.currentOpeningHours.weekdayDescriptions}</p>--%>
-<%--    <p class="card-text" id="error"></p>--%>
-<%--    <p class="lead">Types: ${item.types}</p>--%>
-<%--    <p class="card-text" id="error"></p>--%>
-<%--</c:forEach>--%>
+<c:forEach var="item" items="${response.places}">
+    <p class="lead">Name: ${item.displayName.text}</p>
+    <p class="card-text" id="error"></p>
+    <p class="lead">Latitude: ${item.location.latitude}</p>
+    <p class="card-text" id="error"></p>
+    <p class="lead">Longitude: ${item.location.longitude}</p>
+    <p class="card-text" id="error"></p>
+    <p class="lead">Rating: ${item.rating}</p>
+    <p class="card-text" id="error"></p>
+    <p class="lead">Number: ${item.internationalPhoneNumber}</p>
+    <p class="card-text" id="error"></p>
+    <p class="lead">Summary: ${item.editorialSummary.text}</p>
+    <p class="card-text" id="error"></p>
+    <p class="lead">website URL: ${item.websiteUri}</p>
+    <p class="card-text" id="error"></p>
+    <p class="lead">Google Maps URL: ${item.googleMapsUri}</p>
+    <p class="card-text" id="error"></p>
+    <p class="lead">hours: ${item.currentOpeningHours.weekdayDescriptions}</p>
+    <p class="card-text" id="error"></p>
+    <p class="lead">Types: ${item.types}</p>
+    <p class="card-text" id="error"></p>
+</c:forEach>
 <section>
 
     <div class="container p-5">
@@ -219,13 +210,13 @@
             Travel
           </button>
         </h2>
-<%--        <div id="collapseThree" class="accordion-collapse collapse show" data-bs-parent="#accordionExample"--%>
-<%--             style="background-color:var(--aaa-blue); color:white">--%>
-<%--          <div class="accordion-body">--%>
-<%--            <strong class="text-start">AAA Travel Agent</strong>--%>
-<%--            <span class="text-end">8 miles away</span>--%>
-<%--          </div>--%>
-<%--        </div>--%>
+        <div id="collapseThree" class="accordion-collapse collapse show" data-bs-parent="#accordionExample"
+             style="background-color:var(--aaa-blue); color:white">
+          <div class="accordion-body">
+            <strong class="text-start">AAA Travel Agent</strong>
+            <span class="text-end">8 miles away</span>
+          </div>
+        </div>
       </div>
       <div class="accordion-item">
         <h2 class="accordion-header">
@@ -239,17 +230,9 @@
     </div>
   </div>
 </section>
-<%--<script--%>
-<%--        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg&libraries=maps,marker&v=beta"--%>
-<%--        defer--%>
-<%--></script>--%>
-<script>
-    (g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})({
-        key: "AIzaSyCb0XYmu1Xkh8s1cW4lbYpn5Tx0DiTqGh0",
-        v: "weekly",
-        // Use the 'v' parameter to indicate the version to use (weekly, beta, alpha, etc.).
-        // Add other bootstrap parameters as needed, using camel case.
-    });
-</script>
+<script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg&libraries=maps,marker&v=beta"
+        defer
+></script>
 </body>
 </html>

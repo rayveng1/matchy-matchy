@@ -41,10 +41,9 @@ body {
     padding: 0;
 }
 
-
-
-
-
+.accordion-body{
+    cursor:pointer;
+}
 
 #AAA_logo_middle {
     display:block;
