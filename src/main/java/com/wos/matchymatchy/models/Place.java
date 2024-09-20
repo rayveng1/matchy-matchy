@@ -42,6 +42,8 @@ public class Place {
     @JsonProperty("currentOpeningHours")
     private CurrentOpeningHours currentOpeningHours;
 
+    private String mainCategory;
+
     public Place(Location location, DisplayName displayName, BigDecimal rating, String googleMapsUri, String websiteUri, List<String> types, String internationalPhoneNumber, EditorialSummary editorialSummary) {
         this.location = location;
         this.displayName = displayName;
