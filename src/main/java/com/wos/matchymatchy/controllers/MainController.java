@@ -27,6 +27,9 @@ public class MainController {
     @GetMapping("/")
     public String index(HttpSession session, Model model) throws Exception {
 
+        if(session.getAttribute("latitude") == null){
+            return "index2.jsp";
+        }
         double lat = (double) session.getAttribute("latitude");
         double lng = (double) session.getAttribute("longitude");
 
