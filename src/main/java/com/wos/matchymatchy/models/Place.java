@@ -26,16 +26,16 @@ public class Place {
     private BigDecimal rating = new BigDecimal(0);
 
     @JsonProperty("googleMapsUri")
-    private String googleMapsUri = " . ";
+    private String googleMapsUri = "";
 
     @JsonProperty("websiteUri")
-    private String websiteUri = ".";
+    private String websiteUri = " ";
 
     @JsonProperty("types")
     private List<String> types =  new ArrayList<>();
 
     @JsonProperty("internationalPhoneNumber")
-    private String internationalPhoneNumber = " . ";
+    private String internationalPhoneNumber = " ";
 
     @JsonProperty("editorialSummary")
     private EditorialSummary editorialSummary = new EditorialSummary();
@@ -44,7 +44,7 @@ public class Place {
     private CurrentOpeningHours currentOpeningHours = new CurrentOpeningHours();
 
     @JsonProperty("formattedAddress")
-    private String formattedAddress = " . ";
+    private String formattedAddress = " ";
 
     private String mainCategory = " ";
 
