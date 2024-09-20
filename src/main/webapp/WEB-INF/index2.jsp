@@ -132,16 +132,50 @@
                     ${category}
                 </button>
                 </h2>
+<<<<<<< HEAD
                 <c:set var="counter" value="0" />
                 <c:forEach var="place" items="${categories.places}">
                     <div id="collapse${counter}" class="accordion-collapse collapse show" data-bs-parent="#accordionExample"
+=======
+                <c:forEach var="place" items="${category.value}">
+                    <c:set var="summary" value=" "/>
+                    <div id="collapse${counter}" class="accordion-collapse collapse show"
+                         data-bs-parent="#accordionExample"
+>>>>>>> parent of aac1e5b (Merge pull request #15 from rayveng1/master)
                          style="background-color:var(--aaa-blue); color:white">
                         <c:set var="counter" value="${counter + 1}" />
 
+<<<<<<< HEAD
                         <div class="accordion-body">
                             <strong class="text-start">AAA Travel Agent</strong>
                             <span class="text-end">8 miles away</span>
                         </div>
+=======
+                        <c:if test="${place.editorialSummary.text==' . '}">
+                            <c:set var="summary" value="."/>
+                        </c:if>
+                        <c:if test="${place.editorialSummary.text != ' . '}">
+                            <c:set var="summary" value="${place.editorialSummary.text}"/>
+                        </c:if>
+                        <form:form action="/" id="${place.googleMapsUri}" method="get" modelAttribute="mainPlace" cssClass="mb-0">
+                            <form:hidden path="rating" value="${place.rating}"/>
+                            <form:hidden path="placeName" value="${place.displayName.text}"/>
+                            <c:if test="${summary != '.'}">
+                                <form:hidden path="summary" value="${summary}"/>
+                            </c:if>
+                            <form:hidden path="address" value="${place.formattedAddress}"/>
+                            <form:hidden path="phone" value="${place.internationalPhoneNumber}"/>
+                            <form:hidden path="websiteUrl" value="${place.websiteUri}"/>
+                            <form:hidden path="googleMapsUrl" value="${place.googleMapsUri}"/>
+                            <div class="accordion-body p-0" onclick="">
+                                <button type="submit" class="bg-transparent w-100 p-3 d-flex justify-content-between border-0 text-white">
+                                        <strong>${place.displayName.text}</strong>
+                                        <span class="fw-light">8 miles away</span>
+                                </button>
+
+                            </div>
+                        </form:form>
+>>>>>>> parent of aac1e5b (Merge pull request #15 from rayveng1/master)
                     </div>
                 </c:forEach>
             </div>
