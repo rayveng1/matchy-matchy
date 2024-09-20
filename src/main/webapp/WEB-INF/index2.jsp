@@ -166,6 +166,12 @@
                 </h2>
                 <c:forEach var="place" items="${category.value}">
                     <c:set var="summary" value=" "/>
+                    <c:set var="rating" value=" "/>
+                    <c:set var="summary" value=" "/>
+                    <c:set var="address" value=" "/>
+                    <c:set var="phone" value=" "/>
+                    <c:set var="websiteUrl" value=" "/>
+                    <c:set var="googleMapsUrl" value=" "/>
                     <div id="collapse${counter}" class="accordion-collapse collapse show"
                          data-bs-parent="#accordionExample"
                          style="background-color:var(--aaa-blue); color:white">
@@ -176,16 +182,51 @@
                         <c:if test="${place.editorialSummary.text != ' . '}">
                             <c:set var="summary" value="${place.editorialSummary.text}"/>
                         </c:if>
+                        <c:if test="${place.rating ==null}">
+                            <c:set var="rating" value="."/>
+                        </c:if>
+                        <c:if test="${place.rating != null}">
+                            <c:set var="rating" value="${place.rating}"/>
+                        </c:if>
+                        <c:if test="${place.formattedAddress==' . '}">
+                            <c:set var="address" value="."/>
+                        </c:if>
+                        <c:if test="${place.formattedAddress != ' . '}">
+                            <c:set var="address" value="${place.formattedAddress}"/>
+                        </c:if>
+                        <c:if test="${place.internationalPhoneNumber==' . '}">
+                            <c:set var="phone" value="."/>
+                        </c:if>
+                        <c:if test="${place.internationalPhoneNumber != ' . '}">
+                            <c:set var="phone" value="${place.internationalPhoneNumber}"/>
+                        </c:if>
+                        <c:if test="${place.websiteUri=='.'}">
+                            <c:set var="websiteUrl" value="."/>
+                        </c:if>
+                        <c:if test="${place.websiteUri != '.'}">
+                            <c:set var="websiteUrl" value="${place.websiteUri}"/>
+                        </c:if>
                         <form:form action="/" id="${place.googleMapsUri}" method="get" modelAttribute="mainPlace" cssClass="mb-0">
-                            <form:hidden path="rating" value="${place.rating}"/>
                             <form:hidden path="placeName" value="${place.displayName.text}"/>
+<%--                        <c:if test="${rating != '.'}">--%>
+
+                            <form:hidden path="rating" value="${place.rating}"/>
+<%--                        </c:if>--%>
                             <c:if test="${summary != '.'}">
                                 <form:hidden path="summary" value="${summary}"/>
                             </c:if>
-                            <form:hidden path="address" value="${place.formattedAddress}"/>
-                            <form:hidden path="phone" value="${place.internationalPhoneNumber}"/>
-                            <form:hidden path="websiteUrl" value="${place.websiteUri}"/>
-                            <form:hidden path="googleMapsUrl" value="${place.googleMapsUri}"/>
+                            <c:if test="${summary != '.'}">
+                                <form:hidden path="address" value="${place.formattedAddress}"/>
+                            </c:if>
+                            <c:if test="${phone != '.'}">
+                                <form:hidden path="phone" value="${place.internationalPhoneNumber}"/>
+                            </c:if>
+                            <c:if test="${websiteUrl != '.'}">
+                                <form:hidden path="websiteUrl" value="${place.websiteUri}"/>
+                            </c:if>
+                            <c:if test="${googleMapsUrl != '.'}">
+                                <form:hidden path="googleMapsUrl" value="${place.googleMapsUri}"/>
+                            </c:if>
                             <div class="accordion-body p-0" onclick="">
                                 <button type="submit" class="bg-transparent w-100 p-3 d-flex justify-content-between border-0 text-white">
                                         <strong>${place.displayName.text}</strong>
