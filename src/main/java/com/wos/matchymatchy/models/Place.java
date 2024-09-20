@@ -42,9 +42,12 @@ public class Place {
     @JsonProperty("currentOpeningHours")
     private CurrentOpeningHours currentOpeningHours;
 
+    @JsonProperty("formattedAddress")
+    private String formattedAddress;
+
     private String mainCategory;
 
-    public Place(Location location, DisplayName displayName, BigDecimal rating, String googleMapsUri, String websiteUri, List<String> types, String internationalPhoneNumber, EditorialSummary editorialSummary) {
+    public Place(Location location, DisplayName displayName, BigDecimal rating, String googleMapsUri, String websiteUri, List<String> types, String internationalPhoneNumber, EditorialSummary editorialSummary, CurrentOpeningHours currentOpeningHours, String formattedAddress) {
         this.location = location;
         this.displayName = displayName;
         this.rating = rating;
@@ -53,5 +56,7 @@ public class Place {
         this.types = types;
         this.internationalPhoneNumber = internationalPhoneNumber;
         this.editorialSummary = editorialSummary;
+        this.currentOpeningHours = currentOpeningHours;
+        this.formattedAddress = formattedAddress;
     }
 }
