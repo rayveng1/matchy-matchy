@@ -141,6 +141,11 @@
                          style="background-color:var(--aaa-blue); color:white">
 <%--                        <form:form action="/renderDetails" method="post" modelAttribute="place">--%>
 <%--                            <form:hidden path="rating" value="${place.rating}"/>--%>
+<%--                            <form:hidden path="displayName" value="${place.displayName}"/>--%>
+<%--                            <form:hidden path="editorialSummary" value="${place.editorialSummary}"/>--%>
+<%--                            <form:hidden path="googleMapsUri" value="${place.googleMapsUri}"/>--%>
+<%--                            <form:hidden path="websiteUri" value="${place.websiteUri}"/>--%>
+<%--                            <form:hidden path="internationalPhoneNumber" value="${place.internationalPhoneNumber}"/>--%>
 <%--                        </form:form>--%>
                         <div class="accordion-body d-flex justify-content-between" onclick="">
                             <strong>${place.displayName.text}</strong>

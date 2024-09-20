@@ -5,10 +5,13 @@ import com.wos.matchymatchy.models.Location;
 import com.wos.matchymatchy.models.Place;
 import com.wos.matchymatchy.services.ApiService;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -60,6 +63,15 @@ public class MainController {
         return "index2.jsp";
     }
 
+    @PostMapping("/renderDetails")
+    public String addGame(@Valid @ModelAttribute("game") Place place, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("mainPlace", place);
+            return "game/addGame.jsp";
+        }
+
+        return "redirect:/games";
+    }
 
     public static String getMainCategory(List<String> categories){
             System.out.println("test - "+categories);
