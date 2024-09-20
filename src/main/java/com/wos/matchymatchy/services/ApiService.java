@@ -25,7 +25,7 @@ public class ApiService {
 
         headers.add("Content-Type", "application/json");
         headers.add("X-Goog-Api-Key", googleApiKey);
-        headers.add("X-Goog-FieldMask", "places.displayName,places.rating,places.location,places.websiteUri,places.googleMapsUri,places.types,places.editorialSummary,places.internationalPhoneNumber,places.currentOpeningHours.weekdayDescriptions");
+        headers.add("X-Goog-FieldMask", "places.displayName,places.rating,places.location,places.websiteUri,places.googleMapsUri,places.types,places.editorialSummary,places.internationalPhoneNumber,places.currentOpeningHours.weekdayDescriptions,places.formattedAddress");
 
         JSONObject centerObject = new JSONObject();
         JSONObject circleObject = new JSONObject();

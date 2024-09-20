@@ -109,6 +109,8 @@
 <%--    <p class="card-text" id="error"></p>--%>
 <%--    <p class="lead">Types: ${item.types}</p>--%>
 <%--    <p class="card-text" id="error"></p>--%>
+<%--    <p class="lead">Address: ${item.formattedAddress}</p>--%>
+<%--    <p class="card-text" id="error"></p>--%>
 <%--</c:forEach>--%>
 <section>
 
