@@ -2,6 +2,7 @@ package com.wos.matchymatchy.controllers;
 
 import com.wos.matchymatchy.models.ApiResponse;
 import com.wos.matchymatchy.models.Location;
+import com.wos.matchymatchy.models.MainPlace;
 import com.wos.matchymatchy.models.Place;
 import com.wos.matchymatchy.services.ApiService;
 import jakarta.servlet.http.HttpSession;
@@ -29,7 +30,7 @@ public class MainController {
     }
 
     @GetMapping("/")
-    public String index(HttpSession session, Model model) throws Exception {
+    public String index(@ModelAttribute("mainPlace") MainPlace mainPlace, HttpSession session, Model model) throws Exception {
 
         if (session.getAttribute("latitude") == null){
             return "index2.jsp";
@@ -44,7 +45,7 @@ public class MainController {
 
         model.addAttribute("places", response.getPlaces());
         model.addAttribute("categories", getCategorizedPlaces(response.getPlaces()));
-
+        model.addAttribute("mainPlace", mainPlace);
         return "index2.jsp";
     }
 
@@ -63,18 +64,7 @@ public class MainController {
         return "index2.jsp";
     }
 
-    @PostMapping("/renderDetails")
-    public String addGame(@Valid @ModelAttribute("game") Place place, BindingResult bindingResult, Model model) {
-        if (bindingResult.hasErrors()) {
-            model.addAttribute("mainPlace", place);
-            return "game/addGame.jsp";
-        }
-
-        return "redirect:/games";
-    }
-
     public static String getMainCategory(List<String> categories){
-            System.out.println("test - "+categories);
         for (String category : categories) {
             if ((category.contains("car") && !category.contains("care"))) {
                 return "Car";
@@ -108,7 +98,8 @@ public class MainController {
         HashMap<String, List<Place>> hm = new HashMap<>();
 
         for (Place place : places){
-            System.out.println("test - "+ place.getDisplayName().getText());
+            System.out.println("test - "+ place.getEditorialSummary().getText());
+
             String category = getMainCategory(place.getTypes());
             if (!hm.containsKey(category)){
                 hm.put(category, new ArrayList<>(){{add(place);}});
@@ -116,7 +107,6 @@ public class MainController {
                 hm.get(category).add(place);
             }
         }
-        System.out.println(hm);
         return hm;
     }
 }

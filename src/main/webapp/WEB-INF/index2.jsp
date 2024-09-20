@@ -60,31 +60,58 @@
         </section>
 
         <c:if test="${latitude != null}">
+        </c:if>
+        <c:if test="${mainPlace == null}">
 
             <button class="btn btn-secondary btn-sm" type="button" data-bs-toggle="collapse"
                     data-bs-target="#collapseWidthExample" aria-expanded="false" aria-controls="collapseWidthExample"
                     style="width:.1rem" onclick="toggleArrow(this)">
                 <
             </button>
-        </c:if>
-
-        <div style="min-height: 120px; max-height: 100%">
-            <div class="collapse collapse-horizontal" id="collapseWidthExample" style="height: 100%">
-                <div class="card card-body" style="width: 300px; height: 100%">
-                    <div style="height:fit-content">
-                        <img src="/assets/canes.png" alt="Canes logo!" style="object-fit: contain; width:100%">
-                        <h3>Raising Canes</h3>
-                        <h5 style="font-weight: 450">Rating: 4.6</h5>
-                        <p>Fast-food chain specializing in fried chicken fingers, crinkle-cut fries & Texas toast.</p>
-                        <h5 style="font-weight: 450">Address: 7345 Gaston Ave, Dallas, TX, 75214</h5>
-                        <h5 style="font-weight: 450">Phone: (214) 321-3220</h5>
-                        <h5 style="font-weight: 450">Website: <a href="">raisingcanes.com</a></h5>
-                        <h5 style="height: fit-content; width: 100%; font-weight: 450">Google Maps: <a href="">https://maps.google.com/?cid=7851923780944608967</a>
-                        </h5>
+            <div style="min-height: 120px; max-height: 100%">
+                <div class="collapse collapse-horizontal" id="collapseWidthExample" style="height: 100%">
+                    <div class="card card-body" style="width: 300px; height: 100%">
+                        <div style="height:fit-content">
+                            <img src="/assets/canes.png" alt="Canes logo!" style="object-fit: contain; width:100%">
+                            <h3>Raising Canes</h3>
+                            <h5 style="font-weight: 450">Rating: 4.6</h5>
+                            <p>Fast-food chain specializing in fried chicken fingers, crinkle-cut fries & Texas
+                                toast.</p>
+                            <h5 style="font-weight: 450">Address: 7345 Gaston Ave, Dallas, TX, 75214</h5>
+                            <h5 style="font-weight: 450">Phone: (214) 321-3220</h5>
+                            <h5 style="font-weight: 450">Website: <a href="">raisingcanes.com</a></h5>
+                            <h5 style="height: fit-content; width: 100%; font-weight: 450">Google Maps: <a href="">https://maps.google.com/?cid=7851923780944608967</a>
+                            </h5>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </c:if>
+        <c:if test="${mainPlace != null}">
+            <button class="btn btn-secondary btn-sm" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapseWidthExample2" aria-expanded="false" aria-controls="collapseWidthExample2"
+                    style="width:.1rem" onclick="toggleArrow(this)">
+                <
+            </button>
+            <div style="min-height: 120px; max-height: 100%">
+                <div class="collapse collapse-horizontal" id="collapseWidthExample2" style="height: 100%">
+                    <div class="card card-body" style="width: 300px; height: 100%">
+                        <div style="height:fit-content">
+                            <img src="/assets/canes.png" alt="Canes logo!" style="object-fit: contain; width:100%">
+                            <h3>${mainPlace.placeName}</h3>
+                            <h5 style="font-weight: 450">Rating: ${mainPlace.rating}</h5>
+                            <p>${mainPlace.summary}</p>
+                            <h5 style="font-weight: 450">Address: ${mainPlace.address}</h5>
+                            <h5 style="font-weight: 450">Phone: ${mainPlace.phone}</h5>
+                            <h5 style="font-weight: 450">Website: <a href="">${mainPlace.websiteUrl}</a></h5>
+                            <h5 style="height: fit-content; width: 100%; font-weight: 450">Google Maps: <a
+                                    href="">${mainPlace.googleMapsUrl}</a>
+                            </h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </c:if>
 
     </div>
 </main>
@@ -138,21 +165,35 @@
                     </button>
                 </h2>
                 <c:forEach var="place" items="${category.value}">
+                    <c:set var="summary" value=" "/>
                     <div id="collapse${counter}" class="accordion-collapse collapse show"
                          data-bs-parent="#accordionExample"
                          style="background-color:var(--aaa-blue); color:white">
-<%--                        <form:form action="/renderDetails" method="post" modelAttribute="place">--%>
-<%--                            <form:hidden path="rating" value="${place.rating}"/>--%>
-<%--                            <form:hidden path="displayName" value="${place.displayName}"/>--%>
-<%--                            <form:hidden path="editorialSummary" value="${place.editorialSummary}"/>--%>
-<%--                            <form:hidden path="googleMapsUri" value="${place.googleMapsUri}"/>--%>
-<%--                            <form:hidden path="websiteUri" value="${place.websiteUri}"/>--%>
-<%--                            <form:hidden path="internationalPhoneNumber" value="${place.internationalPhoneNumber}"/>--%>
-<%--                        </form:form>--%>
-                        <div class="accordion-body d-flex justify-content-between" onclick="">
-                            <strong>${place.displayName.text}</strong>
-                            <span>8 miles away</span>
-                        </div>
+
+                        <c:if test="${place.editorialSummary.text==' . '}">
+                            <c:set var="summary" value="."/>
+                        </c:if>
+                        <c:if test="${place.editorialSummary.text != ' . '}">
+                            <c:set var="summary" value="${place.editorialSummary.text}"/>
+                        </c:if>
+                        <form:form action="/" id="${place.googleMapsUri}" method="get" modelAttribute="mainPlace" cssClass="mb-0">
+                            <form:hidden path="rating" value="${place.rating}"/>
+                            <form:hidden path="placeName" value="${place.displayName.text}"/>
+                            <c:if test="${summary != '.'}">
+                                <form:hidden path="summary" value="${summary}"/>
+                            </c:if>
+                            <form:hidden path="address" value="${place.formattedAddress}"/>
+                            <form:hidden path="phone" value="${place.internationalPhoneNumber}"/>
+                            <form:hidden path="websiteUrl" value="${place.websiteUri}"/>
+                            <form:hidden path="googleMapsUrl" value="${place.googleMapsUri}"/>
+                            <div class="accordion-body p-0" onclick="">
+                                <button type="submit" class="bg-transparent w-100 p-3 d-flex justify-content-between border-0 text-white">
+                                        <strong>${place.displayName.text}</strong>
+                                        <span class="fw-light">8 miles away</span>
+                                </button>
+
+                            </div>
+                        </form:form>
                     </div>
                 </c:forEach>
                 <c:set var="counter" value="${counter + 1}"/>

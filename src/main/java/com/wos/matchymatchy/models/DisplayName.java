@@ -12,7 +12,7 @@ import lombok.Setter;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class DisplayName {
     @JsonProperty("text")
-    private String text;
+    private String text = " ";
 
     @JsonProperty("languageCode")
     private String languageCode;
