@@ -2,13 +2,17 @@ package com.wos.matchymatchy.controllers;
 
 import com.wos.matchymatchy.models.ApiResponse;
 import com.wos.matchymatchy.models.Location;
+import com.wos.matchymatchy.models.MainPlace;
 import com.wos.matchymatchy.models.Place;
 import com.wos.matchymatchy.services.ApiService;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -27,7 +31,7 @@ public class MainController {
     }
 
     @GetMapping("/")
-    public String index(HttpSession session, Model model) throws Exception {
+    public String index(@ModelAttribute("mainPlace") MainPlace mainPlace, HttpSession session, Model model) throws Exception {
 
         if (session.getAttribute("latitude") == null){
             return "index2.jsp";
@@ -43,6 +47,7 @@ public class MainController {
         //limit api
         //shorten list before displaying result.
         //category...size
+
 
         ArrayList<Place> places = new ArrayList<>();
         ApiResponse temp = new ApiResponse();
@@ -63,6 +68,8 @@ public class MainController {
         model.addAttribute("places", places);
         model.addAttribute("categories", getCategorizedPlaces(places));
 
+
+        model.addAttribute("mainPlace", mainPlace);
         return "index2.jsp";
     }
 
@@ -81,9 +88,7 @@ public class MainController {
         return "index2.jsp";
     }
 
-
     public static String getMainCategory(List<String> categories){
-            System.out.println("test - "+categories);
         for (String category : categories) {
             if ((category.contains("car_repair") && !category.contains("care"))) {
                 return "Automotive";
@@ -117,7 +122,8 @@ public class MainController {
         HashMap<String, List<Place>> hm = new HashMap<>();
 
         for (Place place : places){
-            System.out.println("test - "+ place.getDisplayName().getText());
+            System.out.println("test - "+ place.getEditorialSummary().getText());
+
             String category = getMainCategory(place.getTypes());
             if (!hm.containsKey(category)){
                 hm.put(category, new ArrayList<>(){{add(place);}});
@@ -125,7 +131,6 @@ public class MainController {
                 hm.get(category).add(place);
             }
         }
-        System.out.println(hm);
         return hm;
     }
 }
