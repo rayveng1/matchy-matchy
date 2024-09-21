@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -41,10 +42,33 @@ public class MainController {
 
         Location location = new Location(lat, lng);
 
-        ApiResponse response = apiService.getApiResponse(location);
+        //if statement category == department_store && Count != 2
+        // return 1 department_store and count++
+        //limit api
+        //shorten list before displaying result.
+        //category...size
 
-        model.addAttribute("places", response.getPlaces());
-        model.addAttribute("categories", getCategorizedPlaces(response.getPlaces()));
+
+        ArrayList<Place> places = new ArrayList<>();
+        ApiResponse temp = new ApiResponse();
+
+//        ArrayList<String> categories = new ArrayList<>(Arrays.asList("restaurant","bank","car_repair","insurance_agency","movie_theater","travel_agency","hotel","fitness_center","amusement_park","department_store"));
+        places.addAll(apiService.getApiResponse(location, "restaurant").getPlaces());
+        places.addAll(apiService.getApiResponse(location, "bank").getPlaces());
+        places.addAll(apiService.getApiResponse(location, "car_repair").getPlaces());
+        places.addAll(apiService.getApiResponse(location, "insurance_agency").getPlaces());
+        places.addAll(apiService.getApiResponse(location, "movie_theater").getPlaces());
+        places.addAll(apiService.getApiResponse(location, "travel_agency").getPlaces());
+//        places.addAll(apiService.getApiResponse(location, "hotel").getPlaces());
+        places.addAll(apiService.getApiResponse(location, "fitness_center").getPlaces());
+//        places.addAll(apiService.getApiResponse(location, "amusement_park").getPlaces());
+        places.addAll(apiService.getApiResponse(location, "department_store").getPlaces());
+
+
+        model.addAttribute("places", places);
+        model.addAttribute("categories", getCategorizedPlaces(places));
+
+
         model.addAttribute("mainPlace", mainPlace);
         return "index2.jsp";
     }
@@ -66,27 +90,27 @@ public class MainController {
 
     public static String getMainCategory(List<String> categories){
         for (String category : categories) {
-            if ((category.contains("car") && !category.contains("care"))) {
-                return "Car";
+            if ((category.contains("car_repair") && !category.contains("care"))) {
+                return "Automotive";
             }
             switch (category) {
                 case "department_store":
                     return "Department Store";
-                case "food":
+                case "restaurant":
                     return "Food";
-                case "finance":
+                case "bank":
                     return "Finance";
-                case "insurance":
+                case "insurance_agency":
                     return "Insurance";
-                case "entertainment":
+                case "movie_theater":
                     return "Entertainment";
-                case "travel":
+                case "travel_agency":
                     return "Travel";
-                case "hotel_lodging":
+                case "hotel":
                     return "Hotel/Lodging";
-                case "fitness_centers":
+                case "fitness_center":
                     return "Fitness Centers";
-                case "theme_parks":
+                case "amusement_park":
                     return "Theme Parks";// Optional: Handle any unknown category
             }
         }

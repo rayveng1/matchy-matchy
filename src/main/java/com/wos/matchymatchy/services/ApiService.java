@@ -10,6 +10,9 @@ import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 @Service
 public class ApiService {
     RestTemplate restTemplate = new RestTemplate();
@@ -20,23 +23,32 @@ public class ApiService {
         this.restTemplate = restTemplate;
     }
 
-    public ApiResponse getApiResponse(Location location) throws JsonProcessingException {
+    public ApiResponse getApiResponse(Location location, String type) throws JsonProcessingException {
         HttpHeaders headers = new HttpHeaders();
 
         headers.add("Content-Type", "application/json");
         headers.add("X-Goog-Api-Key", googleApiKey);
         headers.add("X-Goog-FieldMask", "places.displayName,places.rating,places.location,places.websiteUri,places.googleMapsUri,places.types,places.editorialSummary,places.internationalPhoneNumber,places.currentOpeningHours.weekdayDescriptions,places.formattedAddress");
 
+
         JSONObject centerObject = new JSONObject();
         JSONObject circleObject = new JSONObject();
         JSONObject locationRestrictionObject = new JSONObject();
         JSONObject bodyObject = new JSONObject();
+
         centerObject.put("latitude", location.getLatitude());
+
         centerObject.put("longitude", location.getLongitude());
+
         circleObject.put("center", centerObject);
-        circleObject.put("radius", 500);
+        circleObject.put("radius", 2000);
+
         locationRestrictionObject.put("circle", circleObject);
+
+
         bodyObject.put("locationRestriction", locationRestrictionObject);
+        bodyObject.put("includedTypes", new ArrayList<String>(Arrays.asList(type)));
+        bodyObject.put("maxResultCount", 2);
 
         HttpEntity<String> entity = new HttpEntity<>(bodyObject.toString(), headers);
         String baseUrl = "https://places.googleapis.com/v1/places:searchNearby";
