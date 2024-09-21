@@ -42,27 +42,58 @@ public class MainController {
 
         Location location = new Location(lat, lng);
 
-        //if statement category == department_store && Count != 2
-        // return 1 department_store and count++
-        //limit api
-        //shorten list before displaying result.
-        //category...size
 
 
         ArrayList<Place> places = new ArrayList<>();
-        ApiResponse temp = new ApiResponse();
+        List<Place> restaurantPlaces = apiService.getApiResponse(location, "restaurant").getPlaces();
+        if (restaurantPlaces != null) {
+            places.addAll(restaurantPlaces);
+        }
 
-//        ArrayList<String> categories = new ArrayList<>(Arrays.asList("restaurant","bank","car_repair","insurance_agency","movie_theater","travel_agency","hotel","fitness_center","amusement_park","department_store"));
-        places.addAll(apiService.getApiResponse(location, "restaurant").getPlaces());
-        places.addAll(apiService.getApiResponse(location, "bank").getPlaces());
-        places.addAll(apiService.getApiResponse(location, "car_repair").getPlaces());
-        places.addAll(apiService.getApiResponse(location, "insurance_agency").getPlaces());
-        places.addAll(apiService.getApiResponse(location, "movie_theater").getPlaces());
-        places.addAll(apiService.getApiResponse(location, "travel_agency").getPlaces());
-//        places.addAll(apiService.getApiResponse(location, "hotel").getPlaces());
-        places.addAll(apiService.getApiResponse(location, "fitness_center").getPlaces());
-//        places.addAll(apiService.getApiResponse(location, "amusement_park").getPlaces());
-        places.addAll(apiService.getApiResponse(location, "department_store").getPlaces());
+        List<Place> bankPlaces = apiService.getApiResponse(location, "bank").getPlaces();
+        if (bankPlaces != null) {
+            places.addAll(bankPlaces);
+        }
+
+        List<Place> carRepairPlaces = apiService.getApiResponse(location, "car_repair").getPlaces();
+        if (carRepairPlaces != null) {
+            places.addAll(carRepairPlaces);
+        }
+
+        List<Place> insuranceAgencyPlaces = apiService.getApiResponse(location, "insurance_agency").getPlaces();
+        if (insuranceAgencyPlaces != null) {
+            places.addAll(insuranceAgencyPlaces);
+        }
+
+        List<Place> movieTheaterPlaces = apiService.getApiResponse(location, "movie_theater").getPlaces();
+        if (movieTheaterPlaces != null) {
+            places.addAll(movieTheaterPlaces);
+        }
+
+        List<Place> travelAgencyPlaces = apiService.getApiResponse(location, "travel_agency").getPlaces();
+        if (travelAgencyPlaces != null) {
+            places.addAll(travelAgencyPlaces);
+        }
+
+        List<Place> hotelPlaces = apiService.getApiResponse(location, "hotel").getPlaces();
+        if (hotelPlaces != null) {
+            places.addAll(hotelPlaces);
+        }
+
+        List<Place> fitnessCenterPlaces = apiService.getApiResponse(location, "fitness_center").getPlaces();
+        if (fitnessCenterPlaces != null) {
+            places.addAll(fitnessCenterPlaces);
+        }
+
+        List<Place> amusementParkPlaces = apiService.getApiResponse(location, "amusement_park").getPlaces();
+        if (amusementParkPlaces != null) {
+            places.addAll(amusementParkPlaces);
+        }
+
+        List<Place> departmentStorePlaces = apiService.getApiResponse(location, "department_store").getPlaces();
+        if (departmentStorePlaces != null) {
+            places.addAll(departmentStorePlaces);
+        }
 
 
         model.addAttribute("places", places);

@@ -15,14 +15,10 @@
 <!-- For any Bootstrap that uses JS -->
 <link href="/css/output.css" rel="stylesheet">
 <script src="/webjars/bootstrap/js/bootstrap.min.js" defer></script>
-<script src="/javascript/script.js" defer></script>
 <html>
 <head>
     <title>Index</title>
 </head>
-<script>
-
-</script>
 <body onload="getCurrentLocation()">
 <header class="px-2 py-2">
     <a href="https://ace.aaa.com" target="_blank"><img id="AAA_logo" src="/assets/AAA-logo.png" alt="AAA Logo"
@@ -30,7 +26,7 @@
 </header>
 <main class="d-flex">
     <div class="blue d-flex w-100" style="max-height: fit-content">
-        <section class="container px-3 py-3">
+        <section class="container px-3 py-3" >
             <div class="flex-column mx-auto map-container">
                 <h1 style="font-size: xx-large; color:white; width:fit-content; text-shadow: 2px 2px 1px black;">
                     Explore AAA Near You
@@ -44,17 +40,18 @@
                     </div>
                 </c:if>
                 <c:if test="${latitude != null}">
-                    <gmp-map
-                            center="${latitude},${longitude}"
-                            zoom="13"
-                            map-id="DEMO_MAP_ID"
-                            class="responsive-map"
-                    >
-                        <gmp-advanced-marker
-                                position="${latitude},${longitude}"
-                                title="Seattle, WA"
-                        ></gmp-advanced-marker>
-                    </gmp-map>
+                    <div id="map">hey</div>
+<%--                    <gmp-map--%>
+<%--                            center="${latitude},${longitude}"--%>
+<%--                            zoom="13"--%>
+<%--                            map-id="DEMO_MAP_ID"--%>
+<%--                            class="responsive-map"--%>
+<%--                    >--%>
+<%--                        <gmp-advanced-marker--%>
+<%--                                position="${latitude},${longitude}"--%>
+<%--                                title="Seattle, WA"--%>
+<%--                        ></gmp-advanced-marker>--%>
+<%--                    </gmp-map>--%>
                 </c:if>
             </div>
         </section>
@@ -243,9 +240,10 @@
             </c:forEach>
 
 </section>
-<script
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg&libraries=maps,marker&v=beta"
-        defer
-></script>
+<%--<script--%>
+<%--        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg&libraries=maps,marker&v=beta"--%>
+<%--        defer--%>
+<%--></script>--%>
+<script src="/javascript/script.js" ></script>
 </body>
 </html>
