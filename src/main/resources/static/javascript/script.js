@@ -149,10 +149,32 @@ let map;
 
 async function initMap() {
     const { Map } = await google.maps.importLibrary("maps");
+    const { AdvancedMarkerElement, PinElement } = await google.maps.importLibrary(
+        "marker",
+    );
+    const { Place } = await google.maps.importLibrary("places");
+    const map = new Map(document.getElementById("map"), {
+        center: { lat: 37.42475, lng: -122.0845 },
+        zoom: 13,
+        mapId: "4504f8b37365c3d0",
+    });
+    const parser = new DOMParser();
+    // const { Map } = await google.maps.importLibrary("maps");
+    //
+    // map = new Map(document.getElementById("map"), {
+    //     center: { lat:  37.434, lng: -122.082 },
+    //     zoom: 18,
+    // });
+    // A marker with a with a URL pointing to a PNG.
+    const beachFlagImg = document.createElement("img");
 
-    map = new Map(document.getElementById("map"), {
-        center: { lat: -34.397, lng: 150.644 },
-        zoom: 8,
+    beachFlagImg.src =
+        "/assets/car-icon.png"
+    const beachFlagMarkerView = new AdvancedMarkerElement({
+        map,
+        position: { lat: 37.434, lng: -122.082 },
+        content: beachFlagImg,
+        title: "A marker using a custom PNG Image",
     });
 }
 
