@@ -20,6 +20,7 @@
     <title>Index</title>
 </head>
 <body onload="getCurrentLocation()">
+<button onclick="test(${jsObject})">test</button>
 <header class="px-2 py-2">
     <a href="https://ace.aaa.com" target="_blank"><img id="AAA_logo" src="/assets/AAA-logo.png" alt="AAA Logo"
                                                        style="max-width: 8rem; max-height: 8rem"></a>
@@ -40,18 +41,8 @@
                     </div>
                 </c:if>
                 <c:if test="${latitude != null}">
-                    <div id="map">hey</div>
-<%--                    <gmp-map--%>
-<%--                            center="${latitude},${longitude}"--%>
-<%--                            zoom="13"--%>
-<%--                            map-id="DEMO_MAP_ID"--%>
-<%--                            class="responsive-map"--%>
-<%--                    >--%>
-<%--                        <gmp-advanced-marker--%>
-<%--                                position="${latitude},${longitude}"--%>
-<%--                                title="Seattle, WA"--%>
-<%--                        ></gmp-advanced-marker>--%>
-<%--                    </gmp-map>--%>
+                    <div class="responsive-map" id="map" style="height: 400px"></div>
+
                 </c:if>
             </div>
         </section>

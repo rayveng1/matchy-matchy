@@ -46,6 +46,7 @@ public class MainController {
 
         ArrayList<Place> places = new ArrayList<>();
         List<Place> restaurantPlaces = apiService.getApiResponse(location, "restaurant").getPlaces();
+
         if (restaurantPlaces != null) {
             places.addAll(restaurantPlaces);
         }
@@ -95,7 +96,16 @@ public class MainController {
             places.addAll(departmentStorePlaces);
         }
 
+        JSONObject jsObject = new JSONObject();
+        for (Place place : places) {
+            jsObject.put("longitude", place.getLocation().getLongitude());
+            jsObject.put("latitude", place.getLocation().getLatitude());
+            jsObject.put("category", place.getMainCategory());
+        }
 
+        System.out.println("HEloooooooooooooooooooo;" + jsObject);
+
+        model.addAttribute("jsObject", jsObject);
         model.addAttribute("places", places);
         model.addAttribute("categories", getCategorizedPlaces(places));
 
@@ -164,4 +174,6 @@ public class MainController {
         }
         return hm;
     }
+
+
 }
