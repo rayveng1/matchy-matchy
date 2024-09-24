@@ -35,7 +35,7 @@ public class Place {
     private List<String> types =  new ArrayList<>();
 
     @JsonProperty("internationalPhoneNumber")
-    private String internationalPhoneNumber = " . ";
+    private String internationalPhoneNumber = ".";
 
     @JsonProperty("editorialSummary")
     private EditorialSummary editorialSummary = new EditorialSummary();
@@ -44,9 +44,16 @@ public class Place {
     private CurrentOpeningHours currentOpeningHours = new CurrentOpeningHours();
 
     @JsonProperty("formattedAddress")
-    private String formattedAddress = " . ";
+    private String formattedAddress = ".";
+
+    @JsonProperty("photos")
+    private List<Photo> photos = new ArrayList<>();
 
     private String mainCategory = " ";
+
+    private String imageGetRequest = ".";
+
+    private String distance;
 
     public Place(Location location, DisplayName displayName, BigDecimal rating, String googleMapsUri, String websiteUri, List<String> types, String internationalPhoneNumber, EditorialSummary editorialSummary, CurrentOpeningHours currentOpeningHours, String formattedAddress) {
         this.location = location;
