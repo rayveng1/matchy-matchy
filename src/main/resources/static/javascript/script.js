@@ -76,6 +76,7 @@ async function getCurrentLocation() {
 function sendLocationToServer(lat, lon) {
     console.log(`lat: ${lat}`);
     console.log(`lon: ${lon}`);
+
     var xhr = new XMLHttpRequest();
     xhr.open("POST", "/savelocation", true);
     xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
@@ -107,35 +108,42 @@ function promptUserToChange(){
 
 let map;
 
-async function initMap() {
-    const { Map } = await google.maps.importLibrary("maps");
-    const { AdvancedMarkerElement, PinElement } = await google.maps.importLibrary(
-        "marker",
-    );
-    const { Place } = await google.maps.importLibrary("places");
-    const map = new Map(document.getElementById("map"), {
-        center: { lat: 37.42475, lng: -122.0845 },
-        zoom: 13,
-        mapId: "4504f8b37365c3d0",
-    });
-    const parser = new DOMParser();
-    // const { Map } = await google.maps.importLibrary("maps");
-    //
-    // map = new Map(document.getElementById("map"), {
-    //     center: { lat:  37.434, lng: -122.082 },
-    //     zoom: 18,
-    // });
-    // A marker with a with a URL pointing to a PNG.
-    const beachFlagImg = document.createElement("img");
-
-    beachFlagImg.src =
-        "/assets/car-icon.png"
-    const beachFlagMarkerView = new AdvancedMarkerElement({
-        map,
-        position: { lat: 37.434, lng: -122.082 },
-        content: beachFlagImg,
-        title: "A marker using a custom PNG Image",
+async function getUserLocation() {
+    return new Promise((resolve, reject) => {
+        navigator.geolocation.getCurrentPosition(resolve, reject);
     });
 }
 
+async function initMap() {
+    const { Map } = await google.maps.importLibrary("maps");
+    const { AdvancedMarkerElement, PinElement } = await google.maps.importLibrary("marker");
+    // const { Place } = await google.maps.importLibrary("places");
+
+    const position = await getUserLocation();
+    const userLat = position.coords.latitude;
+    const userLng = position.coords.longitude;
+
+    const map = new Map(document.getElementById("map"), {
+        center: { lat: userLat, lng: userLng },
+        zoom: 13,
+        mapId: "4504f8b37365c3d0",
+    });
+    const carIcon = document.createElement('img');
+    // carIcon.src = "/assets/car-icon2.png";
+    carIcon.style.width = "40px";
+    carIcon.style.height = "40px";
+
+    const carIconMarkerView = new AdvancedMarkerElement({
+        map,
+        position: { lat: userLat, lng: userLng },
+        // content: carIcon,
+        title: "A marker using a custom PNG Image",
+    });
+}
 initMap();
+
+function test(obj){
+    console.log("test");
+    console.log(obj);
+    console.log("test2");
+}

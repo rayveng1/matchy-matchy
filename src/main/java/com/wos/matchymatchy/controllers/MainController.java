@@ -43,7 +43,9 @@ public class MainController {
 
 
         ArrayList<Place> places = new ArrayList<>();
+
         List<Place> restaurantPlaces = apiService.getPlacesApiResponse(location, "restaurant").getPlaces();
+
         if (restaurantPlaces != null) {
             places.addAll(restaurantPlaces);
         }
@@ -93,16 +95,21 @@ public class MainController {
             places.addAll(departmentStorePlaces);
         }
 
+
+        JSONObject jsObject = new JSONObject();
+
         DecimalFormat df = new DecimalFormat("#.#");
         for (Place place : places) {
+            jsObject.put("longitude", place.getLocation().getLongitude());
+            jsObject.put("latitude", place.getLocation().getLatitude());
+            jsObject.put("category", place.getMainCategory());
             place.setDistance(df.format(haversineDistance((Double) session.getAttribute("latitude"), (Double) session.getAttribute("longitude"), place.getLocation().getLatitude(), place.getLocation().getLongitude())));
             for (Photo photo : place.getPhotos()){
-                System.out.println("HEREEEEEEE");
-//                System.out.println(photo.getName());
                 place.setImageGetRequest(apiService.getPhotosApiResponse(photo.getName()));
             }
         }
 
+        model.addAttribute("jsObject", jsObject);
         model.addAttribute("places", places);
         model.addAttribute("categories", getCategorizedPlaces(places));
         model.addAttribute("mainPlace", mainPlace);
@@ -183,4 +190,5 @@ public class MainController {
             double c = 2 * Math.asin(Math.sqrt(a));
             return R * c; // Distance in miles
     }
+
 }
