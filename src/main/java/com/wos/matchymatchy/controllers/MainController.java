@@ -1,9 +1,6 @@
 package com.wos.matchymatchy.controllers;
 
-import com.wos.matchymatchy.models.ApiResponse;
-import com.wos.matchymatchy.models.Location;
-import com.wos.matchymatchy.models.MainPlace;
-import com.wos.matchymatchy.models.Place;
+import com.wos.matchymatchy.models.*;
 import com.wos.matchymatchy.services.ApiService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -11,15 +8,12 @@ import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
+
+import java.util.*;
+import java.text.DecimalFormat;
+
 
 import java.util.Random;
 
@@ -47,6 +41,7 @@ public class MainController {
         Random random = new Random();
 
         ArrayList<Place> places = new ArrayList<>();
+
         List<Place> restaurantPlaces = apiService.getApiResponse(location, "restaurant").getPlaces();
         for (Place place : restaurantPlaces) {
             Place randomPlace = restaurantPlaces.get(random.nextInt(restaurantPlaces.size()));
@@ -103,10 +98,72 @@ public class MainController {
 //            places.addAll(departmentStorePlaces);
 //        }
 
+//         List<Place> restaurantPlaces = apiService.getPlacesApiResponse(location, "restaurant").getPlaces();
+
+//         if (restaurantPlaces != null) {
+//             places.addAll(restaurantPlaces);
+//         }
+
+//         List<Place> bankPlaces = apiService.getPlacesApiResponse(location, "bank").getPlaces();
+//         if (bankPlaces != null) {
+//             places.addAll(bankPlaces);
+//         }
+
+        List<Place> carRepairPlaces = apiService.getPlacesApiResponse(location, "car_repair").getPlaces();
+        if (carRepairPlaces != null) {
+            places.addAll(carRepairPlaces);
+        }
+
+        List<Place> insuranceAgencyPlaces = apiService.getPlacesApiResponse(location, "insurance_agency").getPlaces();
+        if (insuranceAgencyPlaces != null) {
+            places.addAll(insuranceAgencyPlaces);
+        }
+
+        List<Place> movieTheaterPlaces = apiService.getPlacesApiResponse(location, "movie_theater").getPlaces();
+        if (movieTheaterPlaces != null) {
+            places.addAll(movieTheaterPlaces);
+        }
+
+        List<Place> travelAgencyPlaces = apiService.getPlacesApiResponse(location, "travel_agency").getPlaces();
+        if (travelAgencyPlaces != null) {
+            places.addAll(travelAgencyPlaces);
+        }
+
+        List<Place> hotelPlaces = apiService.getPlacesApiResponse(location, "hotel").getPlaces();
+        if (hotelPlaces != null) {
+            places.addAll(hotelPlaces);
+        }
+
+        List<Place> fitnessCenterPlaces = apiService.getPlacesApiResponse(location, "fitness_center").getPlaces();
+        if (fitnessCenterPlaces != null) {
+            places.addAll(fitnessCenterPlaces);
+        }
+
+        List<Place> amusementParkPlaces = apiService.getPlacesApiResponse(location, "amusement_park").getPlaces();
+        if (amusementParkPlaces != null) {
+            places.addAll(amusementParkPlaces);
+        }
+
+        List<Place> departmentStorePlaces = apiService.getPlacesApiResponse(location, "department_store").getPlaces();
+        if (departmentStorePlaces != null) {
+            places.addAll(departmentStorePlaces);
+        }
+
+
+        JSONObject jsObject = new JSONObject();
+
+        DecimalFormat df = new DecimalFormat("#.#");
+        for (Place place : places) {
+            place.setDistance(df.format(haversineDistance((Double) session.getAttribute("latitude"), (Double) session.getAttribute("longitude"), place.getLocation().getLatitude(), place.getLocation().getLongitude())));
+            for (Photo photo : place.getPhotos()){
+                place.setImageGetRequest(apiService.getPhotosApiResponse(photo.getName()));
+            }
+        }
+
+        model.addAttribute("jsObject", jsObject);
 
         model.addAttribute("places", places);
-        model.addAttribute("categories", getCategorizedPlaces(places));
-
+        model.addAttribute("categories", getCategorizedPlaces(places, jsObject));
 
         model.addAttribute("mainPlace", mainPlace);
         return "index2.jsp";
@@ -127,8 +184,9 @@ public class MainController {
         return "index2.jsp";
     }
 
-    public static String getMainCategory(List<String> categories){
+    public static String getMainCategory(List<String> categories) {
         for (String category : categories) {
+            System.out.println("Category: " + category);
             if ((category.contains("car_repair") && !category.contains("care"))) {
                 return "Automotive";
             }
@@ -157,19 +215,138 @@ public class MainController {
     }
 
 
-    public HashMap<String, List<Place>> getCategorizedPlaces(List<Place> places){
+    public HashMap<String, List<Place>> getCategorizedPlaces(List<Place> places, JSONObject jsObject) {
         HashMap<String, List<Place>> hm = new HashMap<>();
+        List<Double> longitudeList = new ArrayList<>();
+        List<Double> latitudeList = new ArrayList<>();
+        List<String> categoryList = new ArrayList<>();
+
+
 
         for (Place place : places){
             System.out.println("test - "+ place.getEditorialSummary().getText());
 
+
+            System.out.println("Place: " + place.getDisplayName().getText() + ", Types: " + place.getTypes());
+
+
+            //longitudeList.add(place.getLocation().getLongitude());
+            //latitudeList.add(place.getLocation().getLatitude());
+
             String category = getMainCategory(place.getTypes());
+            categoryList.add(category);
             if (!hm.containsKey(category)){
                 hm.put(category, new ArrayList<>(){{add(place);}});
             } else {
                 hm.get(category).add(place);
             }
         }
+
+//         jsObject.put("longitudeList", longitudeList);
+
+//         jsObject.put("latitudeList", latitudeList);
+
+//         jsObject.put("categoryList", categoryList);
+
+
         return hm;
     }
+
+
+    @GetMapping("/places")
+    @ResponseBody
+    public List<Map<String, Object>> getPlaces(HttpSession session) throws Exception {
+        if (session.getAttribute("latitude") == null) {
+            return Collections.emptyList(); // return an empty list if no location is found
+        }
+
+        double lat = (double) session.getAttribute("latitude");
+        double lng = (double) session.getAttribute("longitude");
+
+        Location location = new Location(lat, lng);
+        ArrayList<Place> places = new ArrayList<>();
+
+        List<Place> restaurantPlaces = apiService.getApiResponse(location, "restaurant").getPlaces();
+        if (restaurantPlaces != null)
+            places.addAll(restaurantPlaces);
+
+        List<Place> bankPlaces = apiService.getApiResponse(location, "bank").getPlaces();
+        if (bankPlaces != null) {
+            places.addAll(bankPlaces);
+        }
+
+        List<Place> carRepairPlaces = apiService.getApiResponse(location, "car_repair").getPlaces();
+        if (carRepairPlaces != null) {
+            places.addAll(carRepairPlaces);
+        }
+
+        List<Place> insuranceAgencyPlaces = apiService.getApiResponse(location, "insurance_agency").getPlaces();
+        if (insuranceAgencyPlaces != null) {
+            places.addAll(insuranceAgencyPlaces);
+        }
+
+        List<Place> movieTheaterPlaces = apiService.getApiResponse(location, "movie_theater").getPlaces();
+        if (movieTheaterPlaces != null) {
+            places.addAll(movieTheaterPlaces);
+        }
+
+        List<Place> travelAgencyPlaces = apiService.getApiResponse(location, "travel_agency").getPlaces();
+        if (travelAgencyPlaces != null) {
+            places.addAll(travelAgencyPlaces);
+        }
+
+        List<Place> hotelPlaces = apiService.getApiResponse(location, "hotel").getPlaces();
+        if (hotelPlaces != null) {
+            places.addAll(hotelPlaces);
+        }
+
+        List<Place> fitnessCenterPlaces = apiService.getApiResponse(location, "fitness_center").getPlaces();
+        if (fitnessCenterPlaces != null) {
+            places.addAll(fitnessCenterPlaces);
+        }
+
+        List<Place> amusementParkPlaces = apiService.getApiResponse(location, "amusement_park").getPlaces();
+        if (amusementParkPlaces != null) {
+            places.addAll(amusementParkPlaces);
+        }
+
+        List<Place> departmentStorePlaces = apiService.getApiResponse(location, "department_store").getPlaces();
+        if (departmentStorePlaces != null) {
+            places.addAll(departmentStorePlaces);
+        }
+
+
+        List<Map<String, Object>> placesData = new ArrayList<>();
+        for (Place place : places) {
+            Map<String, Object> placeData = new HashMap<>();
+            placeData.put("longitude", place.getLocation().getLongitude());
+            placeData.put("latitude", place.getLocation().getLatitude());
+            placeData.put("category", place.getMainCategory());
+            placesData.add(placeData);
+
+            System.out.println("Place: " + place.getDisplayName().getText() + ", Category: " + place.getMainCategory());
+
+        }
+        return placesData;
+    }
+
+
+
+
+
+    public static double haversineDistance(double lat1, double lon1, double lat2, double lon2) {
+            final double R = 3958.8; // Radius of the Earth in miles
+            double rlat1 = Math.toRadians(lat1); // Convert degrees to radians
+            double rlat2 = Math.toRadians(lat2); // Convert degrees to radians
+            double difflat = rlat2 - rlat1; // Radian difference (latitudes)
+            double difflon = Math.toRadians(lon2 - lon1); // Radian difference (longitudes)
+
+            double a = Math.sin(difflat / 2) * Math.sin(difflat / 2) +
+                    Math.cos(rlat1) * Math.cos(rlat2) *
+                            Math.sin(difflon / 2) * Math.sin(difflon / 2);
+            double c = 2 * Math.asin(Math.sqrt(a));
+            return R * c; // Distance in miles
+    }
+
+
 }
