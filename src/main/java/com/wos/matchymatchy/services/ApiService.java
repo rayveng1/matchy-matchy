@@ -12,6 +12,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Random;
 
 @Service
 public class ApiService {
@@ -41,14 +42,23 @@ public class ApiService {
         centerObject.put("longitude", location.getLongitude());
 
         circleObject.put("center", centerObject);
-        circleObject.put("radius", 2000);
+        Random random = new Random();
+        int randRadius = 8000 + random.nextInt(24000);
+        System.out.println(randRadius);
+        circleObject.put("radius", randRadius);
 
         locationRestrictionObject.put("circle", circleObject);
 
 
         bodyObject.put("locationRestriction", locationRestrictionObject);
+
+//        ArrayList<String> placeTypes = new ArrayList<String>(Arrays.asList(type));
+//        String randType = placeTypes.get(random.nextInt(placeTypes.size()));
+//        System.out.println(randType);
         bodyObject.put("includedTypes", new ArrayList<String>(Arrays.asList(type)));
-        bodyObject.put("maxResultCount", 2);
+
+        int randCount = 1 + random.nextInt(20);
+        bodyObject.put("maxResultCount", randCount);
 
         HttpEntity<String> entity = new HttpEntity<>(bodyObject.toString(), headers);
         String baseUrl = "https://places.googleapis.com/v1/places:searchNearby";
