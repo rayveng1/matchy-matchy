@@ -100,9 +100,6 @@ public class MainController {
 
         DecimalFormat df = new DecimalFormat("#.#");
         for (Place place : places) {
-            jsObject.put("longitude", place.getLocation().getLongitude());
-            jsObject.put("latitude", place.getLocation().getLatitude());
-            jsObject.put("category", place.getMainCategory());
             place.setDistance(df.format(haversineDistance((Double) session.getAttribute("latitude"), (Double) session.getAttribute("longitude"), place.getLocation().getLatitude(), place.getLocation().getLongitude())));
             for (Photo photo : place.getPhotos()){
                 place.setImageGetRequest(apiService.getPhotosApiResponse(photo.getName()));
@@ -111,7 +108,8 @@ public class MainController {
 
         model.addAttribute("jsObject", jsObject);
         model.addAttribute("places", places);
-        model.addAttribute("categories", getCategorizedPlaces(places));
+        model.addAttribute("categories", getCategorizedPlaces(places, jsObject));
+
         model.addAttribute("mainPlace", mainPlace);
         return "index2.jsp";
     }
@@ -131,7 +129,7 @@ public class MainController {
         return "index2.jsp";
     }
 
-    public static String getMainCategory(List<String> categories){
+    public static String getMainCategory(List<String> categories) {
         for (String category : categories) {
             if ((category.contains("car_repair") && !category.contains("care"))) {
                 return "Automotive";
@@ -161,19 +159,32 @@ public class MainController {
     }
 
 
-    public HashMap<String, List<Place>> getCategorizedPlaces(List<Place> places){
+    public HashMap<String, List<Place>> getCategorizedPlaces(List<Place> places, JSONObject jsObject) {
         HashMap<String, List<Place>> hm = new HashMap<>();
+        List<Double> longitudeList = new ArrayList<>();
+        List<Double> latitudeList = new ArrayList<>();
+        List<String> categoryList = new ArrayList<>();
+
+
 
         for (Place place : places){
             System.out.println("test - "+ place.getEditorialSummary().getText());
-
+            longitudeList.add(place.getLocation().getLongitude());
+            latitudeList.add(place.getLocation().getLatitude());
             String category = getMainCategory(place.getTypes());
+            categoryList.add(category);
             if (!hm.containsKey(category)){
                 hm.put(category, new ArrayList<>(){{add(place);}});
             } else {
                 hm.get(category).add(place);
             }
         }
+        jsObject.put("longitudeList", longitudeList);
+
+        jsObject.put("latitudeList", latitudeList);
+
+        jsObject.put("categoryList", categoryList);
+
         return hm;
     }
 

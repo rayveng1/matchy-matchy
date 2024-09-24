@@ -20,10 +20,11 @@
     <title>Index</title>
 </head>
 <body onload="getCurrentLocation()">
-<button onclick="test(${jsObject})">test</button>
+<%--<div on="test()">test</div>--%>
 <header class="px-2 py-2">
     <a href="https://ace.aaa.com" target="_blank"><img id="AAA_logo" src="/assets/AAA-logo.png" alt="AAA Logo"
                                                        style="max-width: 8rem; max-height: 8rem"></a>
+<%--    <p>${jsObject}</p>--%>
 </header>
 <main class="d-flex">
     <div class="blue d-flex w-100" style="max-height: fit-content">
@@ -54,8 +55,8 @@
             </button>
             <div style="min-height: 120px; max-height: 100%">
                 <div class="collapse show collapse-horizontal" id="collapseWidthExample2" style="height: 100%">
-                    <div class="card card-body" style="width: 300px; height: 100%">
-                        <div style="height:fit-content">
+                    <div class="card card-body" style="width: 300px; height: 100%; overflow-y:auto">
+                        <div style="max-height:fit-content">
                             <c:if test="${mainPlace.imageGetRequest != ' '}">
                                 <img src="${mainPlace.imageGetRequest}" alt="${mainPlace.placeName} logo!" style="object-fit: cover; width:100%; height: 35%; ">
                             </c:if>
@@ -196,7 +197,7 @@
                                 <form:hidden path="googleMapsUrl" value="${place.googleMapsUri}"/>
                             </c:if>
                             <c:if test="${imageGetRequest != '.'}">
-                                <form:input path="imageGetRequest" value ="${place.imageGetRequest}"/>
+                                <form:hidden path="imageGetRequest" value ="${place.imageGetRequest}"/>
                             </c:if>
                             <div class="accordion-body p-0" onclick="">
                                 <button type="submit" class="bg-transparent w-100 p-3 d-flex justify-content-between border-0 text-white">
