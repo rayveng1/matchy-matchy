@@ -37,118 +37,78 @@ public class MainController {
         double lng = (double) session.getAttribute("longitude");
 
         Location location = new Location(lat, lng);
-
         Random random = new Random();
-
         ArrayList<Place> places = new ArrayList<>();
 
-        List<Place> restaurantPlaces = apiService.getApiResponse(location, "restaurant").getPlaces();
+        List<Place> restaurantPlaces = apiService.getPlacesApiResponse(location, "restaurant").getPlaces();
         for (Place place : restaurantPlaces) {
-            Place randomPlace = restaurantPlaces.get(random.nextInt(restaurantPlaces.size()));
-            if (!places.contains(randomPlace))
-                places.add(randomPlace);
+            Place randRestaurantPlace = restaurantPlaces.get(random.nextInt(restaurantPlaces.size()));
+            if (!places.contains(randRestaurantPlace))
+                places.add(randRestaurantPlace);
         }
 
-//        if (restaurantPlaces != null) {
-//            places.add(randomPlace);
-//        }
-
-        List<Place> bankPlaces = apiService.getApiResponse(location, "bank").getPlaces();
-        if (bankPlaces != null) {
-            places.addAll(bankPlaces);
+        List<Place> bankPlaces = apiService.getPlacesApiResponse(location, "bank").getPlaces();
+        for (Place place : bankPlaces) {
+            Place randBankPlace = bankPlaces.get(random.nextInt(bankPlaces.size()));
+            if (!places.contains(randBankPlace))
+                places.add(randBankPlace);
         }
-//
-//        List<Place> carRepairPlaces = apiService.getApiResponse(location, "car_repair").getPlaces();
-//        if (carRepairPlaces != null) {
-//            places.addAll(carRepairPlaces);
-//        }
-//
-//        List<Place> insuranceAgencyPlaces = apiService.getApiResponse(location, "insurance_agency").getPlaces();
-//        if (insuranceAgencyPlaces != null) {
-//            places.addAll(insuranceAgencyPlaces);
-//        }
-//
-//        List<Place> movieTheaterPlaces = apiService.getApiResponse(location, "movie_theater").getPlaces();
-//        if (movieTheaterPlaces != null) {
-//            places.addAll(movieTheaterPlaces);
-//        }
-//
-//        List<Place> travelAgencyPlaces = apiService.getApiResponse(location, "travel_agency").getPlaces();
-//        if (travelAgencyPlaces != null) {
-//            places.addAll(travelAgencyPlaces);
-//        }
-//
-//        List<Place> hotelPlaces = apiService.getApiResponse(location, "hotel").getPlaces();
-//        if (hotelPlaces != null) {
-//            places.addAll(hotelPlaces);
-//        }
-//
-//        List<Place> fitnessCenterPlaces = apiService.getApiResponse(location, "fitness_center").getPlaces();
-//        if (fitnessCenterPlaces != null) {
-//            places.addAll(fitnessCenterPlaces);
-//        }
-//
-//        List<Place> amusementParkPlaces = apiService.getApiResponse(location, "amusement_park").getPlaces();
-//        if (amusementParkPlaces != null) {
-//            places.addAll(amusementParkPlaces);
-//        }
-//
-//        List<Place> departmentStorePlaces = apiService.getApiResponse(location, "department_store").getPlaces();
-//        if (departmentStorePlaces != null) {
-//            places.addAll(departmentStorePlaces);
-//        }
-
-//         List<Place> restaurantPlaces = apiService.getPlacesApiResponse(location, "restaurant").getPlaces();
-
-//         if (restaurantPlaces != null) {
-//             places.addAll(restaurantPlaces);
-//         }
-
-//         List<Place> bankPlaces = apiService.getPlacesApiResponse(location, "bank").getPlaces();
-//         if (bankPlaces != null) {
-//             places.addAll(bankPlaces);
-//         }
 
         List<Place> carRepairPlaces = apiService.getPlacesApiResponse(location, "car_repair").getPlaces();
-        if (carRepairPlaces != null) {
-            places.addAll(carRepairPlaces);
+        for (Place place : carRepairPlaces) {
+            Place randCarRepairPlace = carRepairPlaces.get(random.nextInt(carRepairPlaces.size()));
+            if (!places.contains(randCarRepairPlace))
+                places.add(randCarRepairPlace);
         }
 
         List<Place> insuranceAgencyPlaces = apiService.getPlacesApiResponse(location, "insurance_agency").getPlaces();
-        if (insuranceAgencyPlaces != null) {
-            places.addAll(insuranceAgencyPlaces);
+        for (Place place : insuranceAgencyPlaces) {
+            Place randInsuranceAgencyPlace = insuranceAgencyPlaces.get(random.nextInt(insuranceAgencyPlaces.size()));
+            if (!places.contains(randInsuranceAgencyPlace))
+                places.add(randInsuranceAgencyPlace);
         }
 
         List<Place> movieTheaterPlaces = apiService.getPlacesApiResponse(location, "movie_theater").getPlaces();
-        if (movieTheaterPlaces != null) {
-            places.addAll(movieTheaterPlaces);
+        for (Place place : movieTheaterPlaces) {
+            Place randMovieTheaterPlace = movieTheaterPlaces.get(random.nextInt(movieTheaterPlaces.size()));
+            if (!places.contains(randMovieTheaterPlace))
+                places.add(randMovieTheaterPlace);
         }
 
         List<Place> travelAgencyPlaces = apiService.getPlacesApiResponse(location, "travel_agency").getPlaces();
-        if (travelAgencyPlaces != null) {
-            places.addAll(travelAgencyPlaces);
+        for (Place place : travelAgencyPlaces) {
+            Place randTravelAgencyPlace = travelAgencyPlaces.get(random.nextInt(travelAgencyPlaces.size()));
+            if (!places.contains(randTravelAgencyPlace))
+                places.add(randTravelAgencyPlace);
         }
 
         List<Place> hotelPlaces = apiService.getPlacesApiResponse(location, "hotel").getPlaces();
-        if (hotelPlaces != null) {
-            places.addAll(hotelPlaces);
+        for (Place place : hotelPlaces) {
+            Place randHotelPlace = hotelPlaces.get(random.nextInt(hotelPlaces.size()));
+            if (!places.contains(randHotelPlace))
+                places.add(randHotelPlace);
         }
 
         List<Place> fitnessCenterPlaces = apiService.getPlacesApiResponse(location, "fitness_center").getPlaces();
-        if (fitnessCenterPlaces != null) {
-            places.addAll(fitnessCenterPlaces);
+        for (Place place : fitnessCenterPlaces) {
+            Place randFitnessCenterPlace = fitnessCenterPlaces.get(random.nextInt(fitnessCenterPlaces.size()));
+            if (!places.contains(randFitnessCenterPlace))
+                places.add(randFitnessCenterPlace);
         }
 
         List<Place> amusementParkPlaces = apiService.getPlacesApiResponse(location, "amusement_park").getPlaces();
-        if (amusementParkPlaces != null) {
-            places.addAll(amusementParkPlaces);
+        for (Place place : amusementParkPlaces) {
+            Place randAmusementParkPlace = amusementParkPlaces.get(random.nextInt(amusementParkPlaces.size()));
+            if (!places.contains(randAmusementParkPlace))
+                places.add(randAmusementParkPlace);
         }
 
         List<Place> departmentStorePlaces = apiService.getPlacesApiResponse(location, "department_store").getPlaces();
-        if (departmentStorePlaces != null) {
-            places.addAll(departmentStorePlaces);
+        for (Place place : departmentStorePlaces) {
+            Place randDepartmentStorePlace = departmentStorePlaces.get(random.nextInt(departmentStorePlaces.size()));
+            if (!places.contains(randDepartmentStorePlace))
+                places.add(randDepartmentStorePlace);
         }
-
 
         JSONObject jsObject = new JSONObject();
 
