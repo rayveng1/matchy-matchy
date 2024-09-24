@@ -33,6 +33,7 @@ async function getCurrentLocation() {
         console.log("bye - " + localStorage.getItem("locationCookie"));
         if (localStorage.getItem("locationCookie") === "true") {
             console.log("hello");
+            document.getElementById("AAA_logo_middle").classList.add("animate-spin")
             window.location.reload();
         }
     } else {// If the locationCookie is set.
