@@ -67,7 +67,8 @@ async function getCurrentLocation() {
                 window.location.reload();
             }
         }
-    }
+    }await initMap();
+
 
 
 }
@@ -114,7 +115,8 @@ async function getUserLocation() {
     });
 }
 
-async function initMap() {
+async function initMap() {    console.log("hello!")
+
     const { Map } = await google.maps.importLibrary("maps");
     const { AdvancedMarkerElement, PinElement } = await google.maps.importLibrary("marker");
     // const { Place } = await google.maps.importLibrary("places");
@@ -140,10 +142,6 @@ async function initMap() {
         title: "A marker using a custom PNG Image",
     });
 }
-initMap();
 
-function test(obj){
-    console.log("test");
-    console.log(obj);
-    console.log("test2");
+function test(){
 }
