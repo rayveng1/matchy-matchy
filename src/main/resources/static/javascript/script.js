@@ -134,16 +134,16 @@ async function initMap() {    console.log("hello!")
     });
 
     const categoryIcons = {
-        "restaurant": "/assets/food_icon2.png",
-        "bank": "/assets/money_icon2.png",
-        "car_repair": "/assets/car_icon2.png",
-        "insurance_agency": "/assets/insurance-icon.png",
-        "movie_theater": "/assets/movie-theater-icon.png",
-        "travel_agency": "/assets/travel-agency-icon.png",
-        "hotel": "/assets/hotel-icon.png",
-        "fitness_center": "/assets/fitness-center-icon.png",
-        "amusement_park": "/assets/amusement-park-icon.png",
-        "department_store": "/assets/department-store-icon.png"
+        "Food": "/assets/food_icon2.png",
+        "Finance": "/assets/money2.png",
+        "Automotive": "/assets/car-icon2.png",
+        "Insurance": "/assets/insurance_icon2.png",
+        "Entertainment": "/assets/movie_icon.png",
+        "Travel": "/assets/travel_icon2.png",
+        "Hotel/Lodging": "/assets/lodging_icon2.png",
+        "Fitness Centers": "/assets/gym_icon2.png",
+        "Theme Parks": "/assets/theme-park_icon2.png",
+        "Department Store": "/assets/retail_icon2.png"
     };
 
 
@@ -157,28 +157,35 @@ async function initMap() {    console.log("hello!")
         const lng = place.longitude;
         const category = place.category;
 
-        console.log("Category: ", category);
-        console.log("HGHMNnnnnnnnnnncncncncncncnncnccnnjsjsjsajsdjandnjkads");
+        console.log("Category is the javascriopt : ", category);
+
 
         const icon = categoryIcons[category];
 
-        new AdvancedMarkerElement({
+        // Create an image element dynamically based on the category
+        const iconElement = document.createElement('img');
+        iconElement.src = categoryIcons[category] // || "/assets/default-icon.png";
+        iconElement.style.width = "30px";
+        iconElement.style.height = "30px";
+
+        // Create a new marker with the custom icon
+        const customMarker = new AdvancedMarkerElement({
             map,
             position: { lat: lat, lng: lng },
-            // content: `<img src="${icon}" style="width: 40px; height: 40px;">`, // Custom icon for each marker
-            title: category
+            content: iconElement,  // Use the dynamically created image element
+            title: category  // Optionally, set the title to the category
         });
     });
 
     const carIcon = document.createElement('img');
-    // carIcon.src = "/assets/car-icon2.png";
-    carIcon.style.width = "40px";
-    carIcon.style.height = "40px";
+    carIcon.src = "/assets/crane.png";
+    carIcon.style.width = "30px";
+    carIcon.style.height = "30px";
 
     const carIconMarkerView = new AdvancedMarkerElement({
         map,
         position: { lat: userLat, lng: userLng },
-        // content: carIcon,
+        content: carIcon,
         title: "A marker using a custom PNG Image",
     });
 }
