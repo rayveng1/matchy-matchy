@@ -1,9 +1,6 @@
 package com.wos.matchymatchy.controllers;
 
-import com.wos.matchymatchy.models.ApiResponse;
-import com.wos.matchymatchy.models.Location;
-import com.wos.matchymatchy.models.MainPlace;
-import com.wos.matchymatchy.models.Place;
+import com.wos.matchymatchy.models.*;
 import com.wos.matchymatchy.services.ApiService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -16,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -45,71 +43,75 @@ public class MainController {
 
 
         ArrayList<Place> places = new ArrayList<>();
-        List<Place> restaurantPlaces = apiService.getApiResponse(location, "restaurant").getPlaces();
+
+        List<Place> restaurantPlaces = apiService.getPlacesApiResponse(location, "restaurant").getPlaces();
 
         if (restaurantPlaces != null) {
             places.addAll(restaurantPlaces);
         }
 
-        List<Place> bankPlaces = apiService.getApiResponse(location, "bank").getPlaces();
+        List<Place> bankPlaces = apiService.getPlacesApiResponse(location, "bank").getPlaces();
         if (bankPlaces != null) {
             places.addAll(bankPlaces);
         }
 
-        List<Place> carRepairPlaces = apiService.getApiResponse(location, "car_repair").getPlaces();
+        List<Place> carRepairPlaces = apiService.getPlacesApiResponse(location, "car_repair").getPlaces();
         if (carRepairPlaces != null) {
             places.addAll(carRepairPlaces);
         }
 
-        List<Place> insuranceAgencyPlaces = apiService.getApiResponse(location, "insurance_agency").getPlaces();
+        List<Place> insuranceAgencyPlaces = apiService.getPlacesApiResponse(location, "insurance_agency").getPlaces();
         if (insuranceAgencyPlaces != null) {
             places.addAll(insuranceAgencyPlaces);
         }
 
-        List<Place> movieTheaterPlaces = apiService.getApiResponse(location, "movie_theater").getPlaces();
+        List<Place> movieTheaterPlaces = apiService.getPlacesApiResponse(location, "movie_theater").getPlaces();
         if (movieTheaterPlaces != null) {
             places.addAll(movieTheaterPlaces);
         }
 
-        List<Place> travelAgencyPlaces = apiService.getApiResponse(location, "travel_agency").getPlaces();
+        List<Place> travelAgencyPlaces = apiService.getPlacesApiResponse(location, "travel_agency").getPlaces();
         if (travelAgencyPlaces != null) {
             places.addAll(travelAgencyPlaces);
         }
 
-        List<Place> hotelPlaces = apiService.getApiResponse(location, "hotel").getPlaces();
+        List<Place> hotelPlaces = apiService.getPlacesApiResponse(location, "hotel").getPlaces();
         if (hotelPlaces != null) {
             places.addAll(hotelPlaces);
         }
 
-        List<Place> fitnessCenterPlaces = apiService.getApiResponse(location, "fitness_center").getPlaces();
+        List<Place> fitnessCenterPlaces = apiService.getPlacesApiResponse(location, "fitness_center").getPlaces();
         if (fitnessCenterPlaces != null) {
             places.addAll(fitnessCenterPlaces);
         }
 
-        List<Place> amusementParkPlaces = apiService.getApiResponse(location, "amusement_park").getPlaces();
+        List<Place> amusementParkPlaces = apiService.getPlacesApiResponse(location, "amusement_park").getPlaces();
         if (amusementParkPlaces != null) {
             places.addAll(amusementParkPlaces);
         }
 
-        List<Place> departmentStorePlaces = apiService.getApiResponse(location, "department_store").getPlaces();
+        List<Place> departmentStorePlaces = apiService.getPlacesApiResponse(location, "department_store").getPlaces();
         if (departmentStorePlaces != null) {
             places.addAll(departmentStorePlaces);
         }
 
+
         JSONObject jsObject = new JSONObject();
+
+        DecimalFormat df = new DecimalFormat("#.#");
         for (Place place : places) {
             jsObject.put("longitude", place.getLocation().getLongitude());
             jsObject.put("latitude", place.getLocation().getLatitude());
             jsObject.put("category", place.getMainCategory());
+            place.setDistance(df.format(haversineDistance((Double) session.getAttribute("latitude"), (Double) session.getAttribute("longitude"), place.getLocation().getLatitude(), place.getLocation().getLongitude())));
+            for (Photo photo : place.getPhotos()){
+                place.setImageGetRequest(apiService.getPhotosApiResponse(photo.getName()));
+            }
         }
-
-        System.out.println("HEloooooooooooooooooooo;" + jsObject);
 
         model.addAttribute("jsObject", jsObject);
         model.addAttribute("places", places);
         model.addAttribute("categories", getCategorizedPlaces(places));
-
-
         model.addAttribute("mainPlace", mainPlace);
         return "index2.jsp";
     }
@@ -175,5 +177,18 @@ public class MainController {
         return hm;
     }
 
+    public static double haversineDistance(double lat1, double lon1, double lat2, double lon2) {
+            final double R = 3958.8; // Radius of the Earth in miles
+            double rlat1 = Math.toRadians(lat1); // Convert degrees to radians
+            double rlat2 = Math.toRadians(lat2); // Convert degrees to radians
+            double difflat = rlat2 - rlat1; // Radian difference (latitudes)
+            double difflon = Math.toRadians(lon2 - lon1); // Radian difference (longitudes)
+
+            double a = Math.sin(difflat / 2) * Math.sin(difflat / 2) +
+                    Math.cos(rlat1) * Math.cos(rlat2) *
+                            Math.sin(difflon / 2) * Math.sin(difflon / 2);
+            double c = 2 * Math.asin(Math.sqrt(a));
+            return R * c; // Distance in miles
+    }
 
 }

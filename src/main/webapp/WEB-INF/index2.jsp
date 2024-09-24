@@ -46,46 +46,19 @@
                 </c:if>
             </div>
         </section>
-
-        <c:if test="${latitude != null}">
-        </c:if>
-        <c:if test="${mainPlace == null}">
-
-            <button class="btn btn-secondary btn-sm" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#collapseWidthExample" aria-expanded="false" aria-controls="collapseWidthExample"
-                    style="width:.1rem" onclick="toggleArrow(this)">
-                <
-            </button>
-            <div style="min-height: 120px; max-height: 100%">
-                <div class="collapse collapse-horizontal" id="collapseWidthExample" style="height: 100%">
-                    <div class="card card-body" style="width: 300px; height: 100%">
-                        <div style="height:fit-content">
-                            <img src="/assets/canes.png" alt="Canes logo!" style="object-fit: contain; width:100%">
-                            <h3>Raising Canes</h3>
-                            <h5 style="font-weight: 450">Rating: 4.6</h5>
-                            <p>Fast-food chain specializing in fried chicken fingers, crinkle-cut fries & Texas
-                                toast.</p>
-                            <h5 style="font-weight: 450">Address: 7345 Gaston Ave, Dallas, TX, 75214</h5>
-                            <h5 style="font-weight: 450">Phone: (214) 321-3220</h5>
-                            <h5 style="font-weight: 450">Website: <a href="">raisingcanes.com</a></h5>
-                            <h5 style="height: fit-content; width: 100%; font-weight: 450">Google Maps: <a href="">https://maps.google.com/?cid=7851923780944608967</a>
-                            </h5>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </c:if>
-        <c:if test="${mainPlace != null}">
+        <c:if test="${mainPlace.googleMapsUrl != ' '}">
             <button class="btn btn-secondary btn-sm" type="button" data-bs-toggle="collapse"
                     data-bs-target="#collapseWidthExample2" aria-expanded="false" aria-controls="collapseWidthExample2"
                     style="width:.1rem" onclick="toggleArrow(this)">
                 <
             </button>
             <div style="min-height: 120px; max-height: 100%">
-                <div class="collapse collapse-horizontal" id="collapseWidthExample2" style="height: 100%">
+                <div class="collapse show collapse-horizontal" id="collapseWidthExample2" style="height: 100%">
                     <div class="card card-body" style="width: 300px; height: 100%">
                         <div style="height:fit-content">
-                            <img src="/assets/canes.png" alt="Canes logo!" style="object-fit: contain; width:100%">
+                            <c:if test="${mainPlace.imageGetRequest != ' '}">
+                                <img src="${mainPlace.imageGetRequest}" alt="${mainPlace.placeName} logo!" style="object-fit: cover; width:100%; height: 35%; ">
+                            </c:if>
                             <h3>${mainPlace.placeName}</h3>
                             <h5 style="font-weight: 450">Rating: ${mainPlace.rating}</h5>
                             <p>${mainPlace.summary}</p>
@@ -160,6 +133,7 @@
                     <c:set var="phone" value=" "/>
                     <c:set var="websiteUrl" value=" "/>
                     <c:set var="googleMapsUrl" value=" "/>
+                    <c:set var="imageGetRequest" value=" "/>
                     <div id="collapse${counter}" class="accordion-collapse collapse show"
                          data-bs-parent="#accordionExample"
                          style="background-color:var(--aaa-blue); color:white">
@@ -194,6 +168,12 @@
                         <c:if test="${place.websiteUri != '.'}">
                             <c:set var="websiteUrl" value="${place.websiteUri}"/>
                         </c:if>
+                        <c:if test="${place.imageGetRequest=='.'}">
+                            <c:set var="imageGetRequest" value="."/>
+                        </c:if>
+                        <c:if test="${place.imageGetRequest != '.'}">
+                            <c:set var="imageGetRequest" value="${place.imageGetRequest}"/>
+                        </c:if>
                         <form:form action="/" id="${place.googleMapsUri}" method="get" modelAttribute="mainPlace" cssClass="mb-0">
                             <form:hidden path="placeName" value="${place.displayName.text}"/>
                             <%--                        <c:if test="${rating != '.'}">--%>
@@ -203,7 +183,7 @@
                             <c:if test="${summary != '.'}">
                                 <form:hidden path="summary" value="${summary}"/>
                             </c:if>
-                            <c:if test="${summary != '.'}">
+                            <c:if test="${address != '.'}">
                                 <form:hidden path="address" value="${place.formattedAddress}"/>
                             </c:if>
                             <c:if test="${phone != '.'}">
@@ -215,10 +195,13 @@
                             <c:if test="${googleMapsUrl != '.'}">
                                 <form:hidden path="googleMapsUrl" value="${place.googleMapsUri}"/>
                             </c:if>
+                            <c:if test="${imageGetRequest != '.'}">
+                                <form:input path="imageGetRequest" value ="${place.imageGetRequest}"/>
+                            </c:if>
                             <div class="accordion-body p-0" onclick="">
                                 <button type="submit" class="bg-transparent w-100 p-3 d-flex justify-content-between border-0 text-white">
                                     <strong>${place.displayName.text}</strong>
-                                    <span class="fw-light">8 miles away</span>
+                                    <span class="fw-light">${place.distance} miles away</span>
                                 </button>
 
                             </div>
@@ -231,10 +214,6 @@
             </c:forEach>
 
 </section>
-<%--<script--%>
-<%--        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg&libraries=maps,marker&v=beta"--%>
-<%--        defer--%>
-<%--></script>--%>
 <script src="/javascript/script.js" ></script>
 </body>
 </html>
