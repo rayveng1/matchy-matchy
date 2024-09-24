@@ -16,5 +16,6 @@ public class MainPlace {
     private String phone = " ";
     private String websiteUrl = " ";
     private String googleMapsUrl = " ";
+    private String imageGetRequest = " ";
 
 }
