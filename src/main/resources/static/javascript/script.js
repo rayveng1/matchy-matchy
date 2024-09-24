@@ -106,6 +106,8 @@ function promptUserToChange(){
 (g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})
 ({key: "AIzaSyCMsvx7BJpL7LnTmla3mgcFZF78s7TUm7g", v: "weekly"});
 
+
+
 let map;
 
 async function getUserLocation() {
@@ -128,6 +130,44 @@ async function initMap() {
         zoom: 13,
         mapId: "4504f8b37365c3d0",
     });
+
+    const categoryIcons = {
+        "restaurant": "/assets/food_icon2.png",
+        "bank": "/assets/money_icon2.png",
+        "car_repair": "/assets/car_icon2.png",
+        "insurance_agency": "/assets/insurance-icon.png",
+        "movie_theater": "/assets/movie-theater-icon.png",
+        "travel_agency": "/assets/travel-agency-icon.png",
+        "hotel": "/assets/hotel-icon.png",
+        "fitness_center": "/assets/fitness-center-icon.png",
+        "amusement_park": "/assets/amusement-park-icon.png",
+        "department_store": "/assets/department-store-icon.png"
+    };
+
+
+    // Fetch the places data from the server
+    const response = await fetch('/places');
+    const places = await response.json();
+
+    // Create a marker for each place
+    places.forEach(place => {
+        const lat = place.latitude;
+        const lng = place.longitude;
+        const category = place.category;
+
+        console.log("Category: ", category);
+        console.log("HGHMNnnnnnnnnnncncncncncncnncnccnnjsjsjsajsdjandnjkads");
+
+        const icon = categoryIcons[category];
+
+        new AdvancedMarkerElement({
+            map,
+            position: { lat: lat, lng: lng },
+            // content: `<img src="${icon}" style="width: 40px; height: 40px;">`, // Custom icon for each marker
+            title: category
+        });
+    });
+
     const carIcon = document.createElement('img');
     // carIcon.src = "/assets/car-icon2.png";
     carIcon.style.width = "40px";
@@ -142,8 +182,8 @@ async function initMap() {
 }
 initMap();
 
-function test(obj){
-    console.log("test");
-    console.log(obj);
-    console.log("test2");
-}
+// function test(obj){
+//     console.log("test");
+//     console.log(obj);
+//     console.log("test2");
+// }
