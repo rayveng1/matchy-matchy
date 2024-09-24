@@ -46,7 +46,7 @@ public class ApiService {
 
         Random random = new Random();
 
-        int randRadius = 8000 + random.nextInt(24000);
+        int randRadius = 4000 + random.nextInt(8000);
         circleObject.put("radius", randRadius);
 
         locationRestrictionObject.put("circle", circleObject);
