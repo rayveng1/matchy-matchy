@@ -28,7 +28,7 @@ public class MainController {
 
     @GetMapping("/")
     public String index(@ModelAttribute("mainPlace") MainPlace mainPlace, HttpSession session, Model model) throws Exception {
-
+        System.out.println("heytherebud");
         if (session.getAttribute("latitude") == null){
             return "index2.jsp";
 
@@ -44,8 +44,10 @@ public class MainController {
         if (restaurantPlaces != null) {
             for (Place place : restaurantPlaces) {
                 Place randRestaurantPlace = restaurantPlaces.get(random.nextInt(restaurantPlaces.size()));
-                if (!places.contains(randRestaurantPlace))
+                if (!places.contains(randRestaurantPlace)) {
+                    place.setMainCategory("Food");
                     places.add(randRestaurantPlace);
+                }
             }
         }
 
@@ -53,8 +55,10 @@ public class MainController {
         if (bankPlaces != null) {
             for (Place place : bankPlaces) {
                 Place randBankPlace = bankPlaces.get(random.nextInt(bankPlaces.size()));
-                if (!places.contains(randBankPlace))
+                if (!places.contains(randBankPlace)) {
+                    place.setMainCategory("Finance");
                     places.add(randBankPlace);
+                }
             }
         }
 
@@ -62,8 +66,10 @@ public class MainController {
         if (carRepairPlaces != null) {
             for (Place place : carRepairPlaces) {
                 Place randCarRepairPlace = carRepairPlaces.get(random.nextInt(carRepairPlaces.size()));
-                if (!places.contains(randCarRepairPlace))
+                if (!places.contains(randCarRepairPlace)) {
+                    place.setMainCategory("Automotive");
                     places.add(randCarRepairPlace);
+                }
             }
         }
 
@@ -71,8 +77,10 @@ public class MainController {
         if (insuranceAgencyPlaces != null) {
             for (Place place : insuranceAgencyPlaces) {
                 Place randInsuranceAgencyPlace = insuranceAgencyPlaces.get(random.nextInt(insuranceAgencyPlaces.size()));
-                if (!places.contains(randInsuranceAgencyPlace))
+                if (!places.contains(randInsuranceAgencyPlace)) {
+                    place.setMainCategory("Insurance");
                     places.add(randInsuranceAgencyPlace);
+                }
             }
         }
 
@@ -80,8 +88,10 @@ public class MainController {
         if (movieTheaterPlaces != null) {
             for (Place place : movieTheaterPlaces) {
                 Place randMovieTheaterPlace = movieTheaterPlaces.get(random.nextInt(movieTheaterPlaces.size()));
-                if (!places.contains(randMovieTheaterPlace))
+                if (!places.contains(randMovieTheaterPlace)) {
+                    place.setMainCategory("Entertainment");
                     places.add(randMovieTheaterPlace);
+                }
             }
         }
 
@@ -89,8 +99,10 @@ public class MainController {
         if (travelAgencyPlaces != null) {
             for (Place place : travelAgencyPlaces) {
                 Place randTravelAgencyPlace = travelAgencyPlaces.get(random.nextInt(travelAgencyPlaces.size()));
-                if (!places.contains(randTravelAgencyPlace))
+                if (!places.contains(randTravelAgencyPlace)) {
+                    place.setMainCategory("Travel");
                     places.add(randTravelAgencyPlace);
+                }
             }
         }
 
@@ -98,8 +110,10 @@ public class MainController {
         if (hotelPlaces != null) {
             for (Place place : hotelPlaces) {
                 Place randHotelPlace = hotelPlaces.get(random.nextInt(hotelPlaces.size()));
-                if (!places.contains(randHotelPlace))
+                if (!places.contains(randHotelPlace)) {
+                    place.setMainCategory("Hotel/Lodging");
                     places.add(randHotelPlace);
+                }
             }
         }
 
@@ -107,8 +121,10 @@ public class MainController {
         if (fitnessCenterPlaces != null) {
             for (Place place : fitnessCenterPlaces) {
                 Place randFitnessCenterPlace = fitnessCenterPlaces.get(random.nextInt(fitnessCenterPlaces.size()));
-                if (!places.contains(randFitnessCenterPlace))
+                if (!places.contains(randFitnessCenterPlace)) {
+                    place.setMainCategory("Fitness Centers");
                     places.add(randFitnessCenterPlace);
+                }
             }
         }
 
@@ -116,8 +132,10 @@ public class MainController {
         if (amusementParkPlaces != null) {
             for (Place place : amusementParkPlaces) {
                 Place randAmusementParkPlace = amusementParkPlaces.get(random.nextInt(amusementParkPlaces.size()));
-                if (!places.contains(randAmusementParkPlace))
+                if (!places.contains(randAmusementParkPlace)) {
+                    place.setMainCategory("Theme Parks");
                     places.add(randAmusementParkPlace);
+                }
             }
         }
 
@@ -125,8 +143,10 @@ public class MainController {
         if (departmentStorePlaces != null) {
             for (Place place : departmentStorePlaces) {
                 Place randDepartmentStorePlace = departmentStorePlaces.get(random.nextInt(departmentStorePlaces.size()));
-                if (!places.contains(randDepartmentStorePlace))
+                if (!places.contains(randDepartmentStorePlace)) {
+                    place.setMainCategory("Department Store");
                     places.add(randDepartmentStorePlace);
+                }
             }
         }
 
@@ -141,20 +161,19 @@ public class MainController {
         }
 
         model.addAttribute("jsObject", jsObject);
-
         model.addAttribute("places", places);
         model.addAttribute("categories", getCategorizedPlaces(places));
-
         model.addAttribute("mainPlace", mainPlace);
+
+        session.setAttribute("places", places);
+
         return "index2.jsp";
     }
 
     @PostMapping("/savelocation")
     public String location(@RequestBody String request, HttpSession session) {
         JSONObject jsonObject = new JSONObject(request);
-//        System.out.println(jsonObject.get("Latitude") == JSONObject.NULL);
         if (jsonObject.get("Latitude") == JSONObject.NULL) {
-//            System.out.println(jsonObject.get("Latitude"));
             session.removeAttribute("latitude");
             session.removeAttribute("longitude");
         } else {
@@ -166,7 +185,6 @@ public class MainController {
 
     public static String getMainCategory(List<String> categories) {
         for (String category : categories) {
-//            System.out.println("Category: " + category);
             if ((category.contains("car_repair") && !category.contains("care"))) {
                 return "Automotive";
             }
@@ -215,66 +233,67 @@ public class MainController {
     @GetMapping("/places")
     @ResponseBody
     public List<Map<String, Object>> getPlaces(HttpSession session) throws Exception {
-        if (session.getAttribute("latitude") == null) {
-            return Collections.emptyList(); // return an empty list if no location is found
-        }
+//        if (session.getAttribute("latitude") == null) {
+//            return Collections.emptyList(); // return an empty list if no location is found
+//        }
+//
+//        double lat = (double) session.getAttribute("latitude");
+//        double lng = (double) session.getAttribute("longitude");
+//
+//        Location location = new Location(lat, lng);
+//        ArrayList<Place> places = new ArrayList<>();
+//
+//        List<Place> restaurantPlaces = apiService.getPlacesApiResponse(location, "restaurant").getPlaces();
+//        if (restaurantPlaces != null)
+//            places.addAll(restaurantPlaces);
+//
+//        List<Place> bankPlaces = apiService.getPlacesApiResponse(location, "bank").getPlaces();
+//        if (bankPlaces != null) {
+//            places.addAll(bankPlaces);
+//        }
+//
+//        List<Place> carRepairPlaces = apiService.getPlacesApiResponse(location, "car_repair").getPlaces();
+//        if (carRepairPlaces != null) {
+//            places.addAll(carRepairPlaces);
+//        }
+//
+//        List<Place> insuranceAgencyPlaces = apiService.getPlacesApiResponse(location, "insurance_agency").getPlaces();
+//        if (insuranceAgencyPlaces != null) {
+//            places.addAll(insuranceAgencyPlaces);
+//        }
+//
+//        List<Place> movieTheaterPlaces = apiService.getPlacesApiResponse(location, "movie_theater").getPlaces();
+//        if (movieTheaterPlaces != null) {
+//            places.addAll(movieTheaterPlaces);
+//        }
+//
+//        List<Place> travelAgencyPlaces = apiService.getPlacesApiResponse(location, "travel_agency").getPlaces();
+//        if (travelAgencyPlaces != null) {
+//            places.addAll(travelAgencyPlaces);
+//        }
+//
+//        List<Place> hotelPlaces = apiService.getPlacesApiResponse(location, "hotel").getPlaces();
+//        if (hotelPlaces != null) {
+//            places.addAll(hotelPlaces);
+//        }
+//
+//        List<Place> fitnessCenterPlaces = apiService.getPlacesApiResponse(location, "fitness_center").getPlaces();
+//        if (fitnessCenterPlaces != null) {
+//            places.addAll(fitnessCenterPlaces);
+//        }
+//
+//        List<Place> amusementParkPlaces = apiService.getPlacesApiResponse(location, "amusement_park").getPlaces();
+//        if (amusementParkPlaces != null) {
+//            places.addAll(amusementParkPlaces);
+//        }
+//
+//        List<Place> departmentStorePlaces = apiService.getPlacesApiResponse(location, "department_store").getPlaces();
+//        if (departmentStorePlaces != null) {
+//            places.addAll(departmentStorePlaces);
+//        }
 
-        double lat = (double) session.getAttribute("latitude");
-        double lng = (double) session.getAttribute("longitude");
-
-        Location location = new Location(lat, lng);
-        ArrayList<Place> places = new ArrayList<>();
-
-        List<Place> restaurantPlaces = apiService.getPlacesApiResponse(location, "restaurant").getPlaces();
-        if (restaurantPlaces != null)
-            places.addAll(restaurantPlaces);
-
-        List<Place> bankPlaces = apiService.getPlacesApiResponse(location, "bank").getPlaces();
-        if (bankPlaces != null) {
-            places.addAll(bankPlaces);
-        }
-
-        List<Place> carRepairPlaces = apiService.getPlacesApiResponse(location, "car_repair").getPlaces();
-        if (carRepairPlaces != null) {
-            places.addAll(carRepairPlaces);
-        }
-
-        List<Place> insuranceAgencyPlaces = apiService.getPlacesApiResponse(location, "insurance_agency").getPlaces();
-        if (insuranceAgencyPlaces != null) {
-            places.addAll(insuranceAgencyPlaces);
-        }
-
-        List<Place> movieTheaterPlaces = apiService.getPlacesApiResponse(location, "movie_theater").getPlaces();
-        if (movieTheaterPlaces != null) {
-            places.addAll(movieTheaterPlaces);
-        }
-
-        List<Place> travelAgencyPlaces = apiService.getPlacesApiResponse(location, "travel_agency").getPlaces();
-        if (travelAgencyPlaces != null) {
-            places.addAll(travelAgencyPlaces);
-        }
-
-        List<Place> hotelPlaces = apiService.getPlacesApiResponse(location, "hotel").getPlaces();
-        if (hotelPlaces != null) {
-            places.addAll(hotelPlaces);
-        }
-
-        List<Place> fitnessCenterPlaces = apiService.getPlacesApiResponse(location, "fitness_center").getPlaces();
-        if (fitnessCenterPlaces != null) {
-            places.addAll(fitnessCenterPlaces);
-        }
-
-        List<Place> amusementParkPlaces = apiService.getPlacesApiResponse(location, "amusement_park").getPlaces();
-        if (amusementParkPlaces != null) {
-            places.addAll(amusementParkPlaces);
-        }
-
-        List<Place> departmentStorePlaces = apiService.getPlacesApiResponse(location, "department_store").getPlaces();
-        if (departmentStorePlaces != null) {
-            places.addAll(departmentStorePlaces);
-        }
-
-
+        System.out.println("HEYYYY THERE" + session.getAttribute("places"));
+        List<Place> places = (List<Place>) session.getAttribute("places");
         List<Map<String, Object>> placesData = new ArrayList<>();
         for (Place place : places) {
             Map<String, Object> placeData = new HashMap<>();
@@ -283,9 +302,6 @@ public class MainController {
             String category = getMainCategory(place.getTypes());
             placeData.put("category", category);
             placesData.add(placeData);
-
-            System.out.println("Place: " + place.getDisplayName().getText() + ", Category: " + place.getMainCategory());
-
         }
         return placesData;
     }
