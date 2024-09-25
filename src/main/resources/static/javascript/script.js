@@ -1,5 +1,6 @@
+console.log("testing here")
+
 function toggleArrow(element) {
-    console.log(element.innerHTML)
     element.innerHTML = (element.innerHTML.trim() === "&lt;") ? "&gt;" : "&lt;"
 }
 
@@ -11,7 +12,6 @@ const successCallback = (position) => {
 const errorCallback = (error) => {
     localStorage.setItem("locationCookie", "false")
     sendLocationToServer(null, null)
-    console.log(error);
 };
 
 async function getCurrentLocation() {
@@ -30,9 +30,7 @@ async function getCurrentLocation() {
         }
 
         // User accepted to share location
-        console.log("bye - " + localStorage.getItem("locationCookie"));
         if (localStorage.getItem("locationCookie") === "true") {
-            console.log("hello");
             document.getElementById("AAA_logo_middle").classList.add("animate-spin")
             window.location.reload();
         }
@@ -76,9 +74,6 @@ async function getCurrentLocation() {
 
 
 function sendLocationToServer(lat, lon) {
-    console.log(`lat: ${lat}`);
-    console.log(`lon: ${lon}`);
-
     var xhr = new XMLHttpRequest();
     xhr.open("POST", "/savelocation", true);
     xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
@@ -118,7 +113,7 @@ async function getUserLocation() {
     });
 }
 
-async function initMap() {    console.log("hello!")
+async function initMap() {
 
     const { Map } = await google.maps.importLibrary("maps");
     const { AdvancedMarkerElement, PinElement } = await google.maps.importLibrary("marker");
@@ -158,7 +153,6 @@ async function initMap() {    console.log("hello!")
         const lng = place.longitude;
         const category = place.category;
 
-        console.log("Category is the javascriopt : ", category);
 
 
         const icon = categoryIcons[category];
@@ -191,13 +185,6 @@ async function initMap() {    console.log("hello!")
     });
 }
 
-
-// function test(obj){
-//     console.log("test");
-//     console.log(obj);
-//     console.log("test2");
-// } -28.39534, Longitude: 125.50457,
-
 async function panToMain(lat, lng){
     // Ensure that 'map' has been initialized before calling panTo
     if (map) {
@@ -209,8 +196,6 @@ async function panToMain(lat, lng){
 }
 
 async function resetMap(userLat, userLng){
-    console.log("hey" + userLat)
-    console.log("there" + userLng)
     // Ensure that 'map' has been initialized before calling panTo
     if (map) {
         map.panTo({lat: userLat, lng: userLng});

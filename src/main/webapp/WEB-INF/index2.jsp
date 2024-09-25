@@ -200,6 +200,7 @@
                             </c:if>
                             <form:hidden path="lat" value = "${place.location.latitude}"/>
                             <form:hidden path="lng" value = "${place.location.longitude}"/>
+                            <p>pizza ${place.mainCategory} hey</p>
                             <div class="accordion-body p-0" onclick="">
                                 <button type="submit" class="bg-transparent w-100 p-3 d-flex justify-content-between border-0 text-white">
                                     <strong>${place.displayName.text}</strong>
