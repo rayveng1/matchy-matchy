@@ -1,6 +1,7 @@
 :root{
     --aaa-blue: #6379A6;
     --aaa-red: #DC4556;
+    --delay-time: 0.5s;
 }
 
 .blue{
@@ -104,4 +105,39 @@
     .responsive-map {
         width: 100%; /* Adjust the width responsively */
     }
+}
+
+@keyframes drop {
+    0% {
+        transform: translateY(-100px);
+        opacity: 0;
+    }
+    50% {
+        transform: translateY(10px);
+        opacity: 0.7;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Applied when a marker is observed (enters the viewport) */
+.drop {
+    animation: drop 0.5s ease-out forwards var(--delay-time);
+}
+
+/* Custom button style for map controls */
+.custom-map-control-button {
+    background-color: white;
+    border: 0;
+    border-radius: 3px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    margin: 10px;
+    padding: 8px 12px;
+    cursor: pointer;
+}
+
+.custom-map-control-button:hover {
+    background-color: #f0f0f0;
 }

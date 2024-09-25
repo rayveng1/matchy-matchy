@@ -42,6 +42,7 @@
                     </div>
                 </c:if>
                 <c:if test="${latitude != null}">
+
                     <div class="responsive-map" id="map" style="height: 400px"></div>
 
                 </c:if>
@@ -53,7 +54,7 @@
                     style="width:.1rem" onclick="toggleArrow(this)">
                 <
             </button>
-            <div style="min-height: 120px; max-height: 100%">
+            <div style="min-height: 120px; max-height: 500px">
                 <div class="collapse show collapse-horizontal" id="collapseWidthExample2" style="height: 100%">
                     <div class="card card-body" style="width: 300px; height: 100%; overflow-y:auto">
                         <div style="max-height:fit-content">

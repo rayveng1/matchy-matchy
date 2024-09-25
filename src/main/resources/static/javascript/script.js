@@ -115,6 +115,15 @@ async function getUserLocation() {
     });
 }
 
+const intersectionObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add("drop");
+            intersectionObserver.unobserve(entry.target);  // Animate once
+        }
+    });
+});
+
 async function initMap() {
 
     const { Map } = await google.maps.importLibrary("maps");
@@ -164,6 +173,7 @@ async function initMap() {
         iconElement.src = categoryIcons[category] // || "/assets/default-icon.png";
         iconElement.style.width = "30px";
         iconElement.style.height = "30px";
+        iconElement.style.opacity = "0";  // Start with opacity 0
 
         // Create a new marker with the custom icon
         const customMarker = new AdvancedMarkerElement({
@@ -172,6 +182,8 @@ async function initMap() {
             content: iconElement,  // Use the dynamically created image element
             title: category  // Optionally, set the title to the category
         });
+        // Add animation using IntersectionObserver
+        intersectionObserver.observe(iconElement);
     });
 
     const carIcon = document.createElement('img');
@@ -184,6 +196,28 @@ async function initMap() {
         position: { lat: userLat, lng: userLng },
         content: carIcon,
         title: "A marker using a custom PNG Image",
+    });
+    console.log("INTMAP")
+    // Add a button to pan to the current user location
+    const locationButton = document.createElement("button");
+    locationButton.id = "locationButton";
+    locationButton.textContent = "Pan to Current Location";
+    locationButton.classList.add("custom-map-control-button");
+    locationButton.style.margin = "10px";
+    map.controls[google.maps.ControlPosition.BOTTOM_LEFT].push(locationButton);
+
+    locationButton.addEventListener("click", async () => {
+        try {
+            const position = await getUserLocation();
+            const userLat = position.coords.latitude;
+            const userLng = position.coords.longitude;
+
+            // Pan the map to the current user's location
+            map.panTo({ lat: userLat, lng: userLng });
+            map.setZoom(15); // Optionally zoom in closer
+        } catch (error) {
+            console.error("Error getting the current location", error);
+        }
     });
 }
 
@@ -206,3 +240,5 @@ async function resetMap(userLat, userLng){
         console.error("Map is not initialized yet!");
     }
 }
+
+
