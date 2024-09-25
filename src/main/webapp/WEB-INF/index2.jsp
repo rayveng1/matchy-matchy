@@ -35,7 +35,7 @@
                 </h1>
                 <c:if test="${latitude == null}">
                     <div style="margin: 8rem auto">
-                        <img id="AAA_logo_middle" class="animate-pokePulse" src="/assets/acsc.svg" alt="AAA Logo"
+                        <img id="AAA_logo_middle" class="animate-pokePulse" src="/assets/jinja-profile.jpg" alt="AAA Logo"
                              style="max-width: 10rem; max-height: 8rem;" onclick="promptUserToChange()">
                         <p class="mx-auto text-warning fst-italic mt-3 hidden" style="width: fit-content">Please enable
                             your location sharing!</p>
