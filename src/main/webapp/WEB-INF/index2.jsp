@@ -19,7 +19,7 @@
 <head>
     <title>Index</title>
 </head>
-<body onload="getCurrentLocation()">
+<%--<body onload="getCurrentLocation()">--%>
 <%--<div on="test()">test</div>--%>
 <header class="px-2 py-2">
     <a href="https://ace.aaa.com" target="_blank"><img id="AAA_logo" src="/assets/AAA-logo.png" alt="AAA Logo"
@@ -31,7 +31,7 @@
         <section class="container px-3 py-3" >
             <div class="flex-column mx-auto map-container">
                 <h1 style="font-size: xx-large; color:white; width:fit-content; text-shadow: 2px 2px 1px black;">
-                    Explore AAA Near You
+                    Adventure AAA Near You
                 </h1>
                 <c:if test="${latitude == null}">
                     <div style="margin: 8rem auto">

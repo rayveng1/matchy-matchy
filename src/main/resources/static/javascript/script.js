@@ -15,9 +15,11 @@ const errorCallback = (error) => {
 };
 
 async function getCurrentLocation() {
+    console.log((new Error()).stack?.split("\n")[2]?.trim().split(" ")[1])
 
     // If the locationCookie isn't set yet.
     if (!localStorage.getItem("locationCookie")) {
+        console.log("2")
         const positionPromise = new Promise((resolve, reject) => {
             navigator.geolocation.getCurrentPosition(resolve, reject);
         });
@@ -36,6 +38,7 @@ async function getCurrentLocation() {
         }
     } else {// If the locationCookie is set.
         if (localStorage.getItem("locationCookie") === "true"){
+            console.log("3")
             const positionPromise = new Promise((resolve, reject) => {
                 navigator.geolocation.getCurrentPosition(resolve, reject);
             });
@@ -52,6 +55,7 @@ async function getCurrentLocation() {
                 window.location.reload();
             }
         } else {
+            console.log("4")
             const positionPromise = new Promise((resolve, reject) => {
                 navigator.geolocation.getCurrentPosition(resolve, reject);
             });
@@ -68,7 +72,8 @@ async function getCurrentLocation() {
                 window.location.reload();
             }
         }
-    }await initMap();
+    }
+    await initMap();
 
 
 
