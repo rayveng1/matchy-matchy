@@ -69,6 +69,8 @@
                             <h5 style="height: fit-content; width: 100%; font-weight: 450">Google Maps: <a
                                     href="">${mainPlace.googleMapsUrl}</a>
                             </h5>
+                            <button class="btn btn-sm btn-primary" onclick='panToMain(${mainPlace.lat}, ${mainPlace.lng})'>Show on Map</button>
+                            <button class="btn btn-sm btn-secondary" onclick="resetMap(${latitude}, ${longitude})">Reset Map</button>
                         </div>
                     </div>
                 </div>
@@ -177,10 +179,7 @@
                         </c:if>
                         <form:form action="/" id="${place.googleMapsUri}" method="get" modelAttribute="mainPlace" cssClass="mb-0">
                             <form:hidden path="placeName" value="${place.displayName.text}"/>
-                            <%--                        <c:if test="${rating != '.'}">--%>
-
                             <form:hidden path="rating" value="${place.rating}"/>
-                            <%--                        </c:if>--%>
                             <c:if test="${summary != '.'}">
                                 <form:hidden path="summary" value="${summary}"/>
                             </c:if>
@@ -199,6 +198,8 @@
                             <c:if test="${imageGetRequest != '.'}">
                                 <form:hidden path="imageGetRequest" value ="${place.imageGetRequest}"/>
                             </c:if>
+                            <form:hidden path="lat" value = "${place.location.latitude}"/>
+                            <form:hidden path="lng" value = "${place.location.longitude}"/>
                             <div class="accordion-body p-0" onclick="">
                                 <button type="submit" class="bg-transparent w-100 p-3 d-flex justify-content-between border-0 text-white">
                                     <strong>${place.displayName.text}</strong>

@@ -128,7 +128,7 @@ async function initMap() {    console.log("hello!")
     const userLat = position.coords.latitude;
     const userLng = position.coords.longitude;
 
-    const map = new Map(document.getElementById("map"), {
+    map = new Map(document.getElementById("map"), {
         center: { lat: userLat, lng: userLng },
         zoom: 13,
         mapId: "4504f8b37365c3d0",
@@ -196,7 +196,26 @@ async function initMap() {    console.log("hello!")
 //     console.log("test");
 //     console.log(obj);
 //     console.log("test2");
-// }
+// } -28.39534, Longitude: 125.50457,
 
-function test(){
+async function panToMain(lat, lng){
+    // Ensure that 'map' has been initialized before calling panTo
+    if (map) {
+        map.panTo({lat: lat, lng: lng});
+        map.setZoom(15)// Pan to a new location
+    } else {
+        console.error("Map is not initialized yet!");
+    }
+}
+
+async function resetMap(userLat, userLng){
+    console.log("hey" + userLat)
+    console.log("there" + userLng)
+    // Ensure that 'map' has been initialized before calling panTo
+    if (map) {
+        map.panTo({lat: userLat, lng: userLng});
+        map.setZoom(13)// Pan to a new location
+    } else {
+        console.error("Map is not initialized yet!");
+    }
 }
