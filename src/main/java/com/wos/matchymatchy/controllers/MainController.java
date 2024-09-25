@@ -143,7 +143,7 @@ public class MainController {
         model.addAttribute("jsObject", jsObject);
 
         model.addAttribute("places", places);
-        model.addAttribute("categories", getCategorizedPlaces(places, jsObject));
+        model.addAttribute("categories", getCategorizedPlaces(places));
 
         model.addAttribute("mainPlace", mainPlace);
         return "index2.jsp";
@@ -195,40 +195,19 @@ public class MainController {
     }
 
 
-    public HashMap<String, List<Place>> getCategorizedPlaces(List<Place> places, JSONObject jsObject) {
+    public HashMap<String, List<Place>> getCategorizedPlaces(List<Place> places) {
         HashMap<String, List<Place>> hm = new HashMap<>();
-        List<Double> longitudeList = new ArrayList<>();
-        List<Double> latitudeList = new ArrayList<>();
-        List<String> categoryList = new ArrayList<>();
 
 
 
         for (Place place : places){
-            System.out.println("test - "+ place.getEditorialSummary().getText());
-
-
-//            System.out.println("Place: " + place.getDisplayName().getText() + ", Types: " + place.getTypes());
-
-
-            //longitudeList.add(place.getLocation().getLongitude());
-            //latitudeList.add(place.getLocation().getLatitude());
-
             String category = getMainCategory(place.getTypes());
-            categoryList.add(category);
             if (!hm.containsKey(category)){
                 hm.put(category, new ArrayList<>(){{add(place);}});
             } else {
                 hm.get(category).add(place);
             }
         }
-
-//         jsObject.put("longitudeList", longitudeList);
-
-//         jsObject.put("latitudeList", latitudeList);
-
-//         jsObject.put("categoryList", categoryList);
-
-
         return hm;
     }
 
