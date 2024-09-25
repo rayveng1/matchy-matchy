@@ -48,6 +48,7 @@ async function getCurrentLocation() {
             }
 
             if (localStorage.getItem("locationCookie") === "false"){
+                fetch("/resetMainPlace")
                 window.location.reload();
             }
         } else {
@@ -63,6 +64,7 @@ async function getCurrentLocation() {
             }
 
             if (localStorage.getItem("locationCookie") === "true"){
+                document.getElementById("AAA_logo_middle").classList.add("animate-spin")
                 window.location.reload();
             }
         }
