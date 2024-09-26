@@ -140,7 +140,7 @@ async function initMap() {
     const userLng = position.coords.longitude;
 
     map = new Map(document.getElementById("map"), {
-        center: { lat: userLat, lng: userLng },
+        center: { lat: userLat , lng: userLng  },
         zoom: 13,
         mapId: "4504f8b37365c3d0",
     });
@@ -184,11 +184,22 @@ async function initMap() {
         const customMarker = new AdvancedMarkerElement({
             map,
             position: { lat: lat, lng: lng },
+
             content: iconElement,  // Use the dynamically created image element
-            title: category  // Optionally, set the title to the category
-        });
+            title: category,  // Optionally, set the title to the category
+            // gmpClickable: true
+
+        });// Add a click listener for each marker, and set up the info window.
         // Add animation using IntersectionObserver
         intersectionObserver.observe(iconElement);
+    });
+
+    customMarker.addListener("click", ({ domEvent, latLng }) => {
+        const { target } = domEvent;
+
+        infoWindow.close();
+        infoWindow.setContent(marker.title);
+        infoWindow.open(marker.map, marker);
     });
 
     const carIcon = document.createElement('img');
@@ -225,6 +236,9 @@ async function initMap() {
         }
     });
 }
+
+
+
 
 async function panToMain(lat, lng){
     // Ensure that 'map' has been initialized before calling panTo

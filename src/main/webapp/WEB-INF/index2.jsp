@@ -8,23 +8,23 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<!-- for Bootstrap CSS -->
-<link rel="stylesheet" href="/webjars/bootstrap/css/bootstrap.min.css"/>
-<!-- YOUR own local CSS -->
-<link rel="stylesheet" href="/css/style.css"/>
-<!-- For any Bootstrap that uses JS -->
-<link href="/css/output.css" rel="stylesheet">
-<script src="/webjars/bootstrap/js/bootstrap.min.js" defer></script>
 <html>
 <head>
     <title>Index</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- for Bootstrap CSS -->
+    <link rel="stylesheet" href="/webjars/bootstrap/css/bootstrap.min.css"/>
+    <!-- YOUR own local CSS -->
+    <link rel="stylesheet" href="/css/style.css"/>
+    <!-- For any Bootstrap that uses JS -->
+    <link href="/css/output.css" rel="stylesheet">
+    <script src="/webjars/bootstrap/js/bootstrap.min.js" defer></script>
 </head>
 <%--<body onload="getCurrentLocation()">--%>
 <%--<div on="test()">test</div>--%>
 <header class="px-2 py-2">
     <a href="https://ace.aaa.com" target="_blank"><img id="AAA_logo" src="/assets/AAA-logo.png" alt="AAA Logo"
                                                        style="max-width: 8rem; max-height: 8rem"></a>
-<%--    <p>${jsObject}</p>--%>
 </header>
 <main class="d-flex">
     <div class="blue d-flex w-100" style="max-height: fit-content">
@@ -201,6 +201,7 @@
                             </c:if>
                             <form:hidden path="lat" value = "${place.location.latitude}"/>
                             <form:hidden path="lng" value = "${place.location.longitude}"/>
+<%--                            <p>${place.queryParam}</p>--%>
                             <div class="accordion-body p-0" onclick="">
                                 <button type="submit" class="bg-transparent w-100 p-3 d-flex justify-content-between border-0 text-white">
                                     <strong>${place.displayName.text}</strong>
