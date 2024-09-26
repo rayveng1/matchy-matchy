@@ -18,7 +18,7 @@
     width: 0;
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 767px) {
     #AAA_logo {
         max-width: 6rem !important;
         max-height: 6rem !important;
@@ -27,6 +27,22 @@
         margin-right: auto;
     }
 }
+
+/*@media only screen and (max-width: 700px) {*/
+/*    .blue {*/
+/*        display: flex;*/
+/*        flex-direction: column; !* Stack elements vertically *!*/
+/*    }*/
+
+/*    .details {*/
+/*        order: 2; !* Move .details below .map-container *!*/
+/*    }*/
+
+/*    .map-container {*/
+/*        order: 1; !* Ensure .map-container stays on top *!*/
+/*    }*/
+/*}*/
+
 
 #map {
     height: 100%;

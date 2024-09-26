@@ -35,7 +35,7 @@ public class MainController {
         double lat = (double) session.getAttribute("latitude");
         double lng = (double) session.getAttribute("longitude");
 
-        Location location = new Location(lat, lng);
+        Location location = new Location(lat, lng );
         if (session.getAttribute("places") == null){
             Random random = new Random();
             ArrayList<Place> places = new ArrayList<>();
@@ -163,6 +163,10 @@ public class MainController {
         if (placeList != null) {
             for (Place place : placeList) {
                 Place randomPlace = placeList.get(random.nextInt(placeList.size()));
+                if (randomPlace.getDisplayName().getText().equals("AAA Garland Insurance and Member Services")){
+                    System.out.println(randomPlace.getDisplayName().getText() + " queryParam: " + category);
+                }
+                randomPlace.setQueryParam(category);
                 if (!places.contains(randomPlace)) {
                     randomPlace.setMainCategory(mainCategory);
                     places.add(randomPlace);
