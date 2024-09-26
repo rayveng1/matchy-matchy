@@ -11,7 +11,6 @@
 <html>
 <head>
     <title>Index</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- for Bootstrap CSS -->
     <link rel="stylesheet" href="/webjars/bootstrap/css/bootstrap.min.css"/>
     <!-- YOUR own local CSS -->
@@ -20,6 +19,7 @@
     <link href="/css/output.css" rel="stylesheet">
     <script src="/webjars/bootstrap/js/bootstrap.min.js" defer></script>
 </head>
+<body>
 <%--<body onload="getCurrentLocation()">--%>
 <%--<div on="test()">test</div>--%>
 <header class="px-2 py-2">
@@ -80,32 +80,7 @@
 
     </div>
 </main>
-<%--<c:forEach var="item" items="${response.places}">--%>
-<%--    <p class="lead">Name: ${item.displayName.text}</p>--%>
-<%--    <p class="card-text" id="error"></p>--%>
-<%--    <p class="lead">Latitude: ${item.location.latitude}</p>--%>
-<%--    <p class="card-text" id="error"></p>--%>
-<%--    <p class="lead">Longitude: ${item.location.longitude}</p>--%>
-<%--    <p class="card-text" id="error"></p>--%>
-<%--    <p class="lead">Rating: ${item.rating}</p>--%>
-<%--    <p class="card-text" id="error"></p>--%>
-<%--    <p class="lead">Number: ${item.internationalPhoneNumber}</p>--%>
-<%--    <p class="card-text" id="error"></p>--%>
-<%--    <p class="lead">Summary: ${item.editorialSummary.text}</p>--%>
-<%--    <p class="card-text" id="error"></p>--%>
-<%--    <p class="lead">website URL: ${item.websiteUri}</p>--%>
-<%--    <p class="card-text" id="error"></p>--%>
-<%--    <p class="lead">Google Maps URL: ${item.googleMapsUri}</p>--%>
-<%--    <p class="card-text" id="error"></p>--%>
-<%--    <p class="lead">hours: ${item.currentOpeningHours.weekdayDescriptions}</p>--%>
-<%--    <p class="card-text" id="error"></p>--%>
-<%--    <p class="lead">Types: ${item.types}</p>--%>
-<%--    <p class="card-text" id="error"></p>--%>
-<%--    <p class="lead">Address: ${item.formattedAddress}</p>--%>
-<%--    <p class="card-text" id="error"></p>--%>
-<%--</c:forEach>--%>
 <section>
-
     <div class="container p-5">
         <div class="mx-auto mb-5" style="width:fit-content">
             <h3>Categories</h3>
@@ -118,7 +93,6 @@
         </div>
         <c:set var="counter" value="0"/>
         <div class="accordion" id="accordionExample">
-
             <c:forEach var="category" items="${categories}">
             <div class="accordion-item">
                 <h2 class="accordion-header">
@@ -201,7 +175,6 @@
                             </c:if>
                             <form:hidden path="lat" value = "${place.location.latitude}"/>
                             <form:hidden path="lng" value = "${place.location.longitude}"/>
-<%--                            <p>${place.queryParam}</p>--%>
                             <div class="accordion-body p-0" onclick="">
                                 <button type="submit" class="bg-transparent w-100 p-3 d-flex justify-content-between border-0 text-white">
                                     <strong>${place.displayName.text}</strong>
@@ -214,9 +187,7 @@
                 </c:forEach>
                 <c:set var="counter" value="${counter + 1}"/>
             </div>
-
             </c:forEach>
-
 </section>
 <script src="/javascript/script.js" ></script>
 </body>
