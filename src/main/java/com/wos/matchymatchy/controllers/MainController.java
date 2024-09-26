@@ -163,9 +163,6 @@ public class MainController {
         if (placeList != null) {
             for (Place place : placeList) {
                 Place randomPlace = placeList.get(random.nextInt(placeList.size()));
-                if (randomPlace.getDisplayName().getText().equals("AAA Garland Insurance and Member Services")){
-                    System.out.println(randomPlace.getDisplayName().getText() + " queryParam: " + category);
-                }
                 randomPlace.setQueryParam(category);
                 if (!places.contains(randomPlace)) {
                     randomPlace.setMainCategory(mainCategory);

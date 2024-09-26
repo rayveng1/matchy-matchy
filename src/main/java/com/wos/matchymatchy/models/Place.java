@@ -78,9 +78,9 @@ public class Place {
 //            System.out.println("this: " + this.googleMapsUri);
 //            System.out.println("test: " + ((Place) o).googleMapsUri);
             retVal = ((Place) o).googleMapsUri.equals(this.googleMapsUri);
-            if (((Place) o).googleMapsUri.equals(this.googleMapsUri)){
-                System.out.println("FAIL HERE:\n\t" + ((Place) o).getDisplayName().getText() + ", " + ((Place) o).getQueryParam() + "\n\t" + this.getDisplayName().getText() + ", " + this.getQueryParam());
-            }
+//            if (((Place) o).googleMapsUri.equals(this.googleMapsUri)){
+//                System.out.println("FAIL HERE:\n\t" + ((Place) o).getDisplayName().getText() + ", " + ((Place) o).getQueryParam() + "\n\t" + this.getDisplayName().getText() + ", " + this.getQueryParam());
+//            }
         }
 
         return retVal;

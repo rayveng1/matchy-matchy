@@ -131,7 +131,7 @@ const intersectionObserver = new IntersectionObserver((entries) => {
 
 async function initMap() {
 
-    const { Map } = await google.maps.importLibrary("maps");
+    const { Map, InfoWindow } = await google.maps.importLibrary("maps");
     const { AdvancedMarkerElement, PinElement } = await google.maps.importLibrary("marker");
     // const { Place } = await google.maps.importLibrary("places");
 
@@ -162,7 +162,7 @@ async function initMap() {
     // Fetch the places data from the server
     const response = await fetch('/places');
     const places = await response.json();
-
+    const infoWindow = new InfoWindow;
     // Create a marker for each place
     places.forEach(place => {
         const lat = place.latitude;
@@ -184,22 +184,23 @@ async function initMap() {
         const customMarker = new AdvancedMarkerElement({
             map,
             position: { lat: lat, lng: lng },
+            gmpClickable: true,
 
             content: iconElement,  // Use the dynamically created image element
             title: category,  // Optionally, set the title to the category
             // gmpClickable: true
 
-        });// Add a click listener for each marker, and set up the info window.
+        });
+
+
+        // Add a click listener for each marker, and set up the info window.
+        customMarker.addListener("click", () => {
+            infoWindow.close();
+            infoWindow.setContent(customMarker.title);
+            infoWindow.open(map, customMarker);
+        });
         // Add animation using IntersectionObserver
         intersectionObserver.observe(iconElement);
-    });
-
-    customMarker.addListener("click", ({ domEvent, latLng }) => {
-        const { target } = domEvent;
-
-        infoWindow.close();
-        infoWindow.setContent(marker.title);
-        infoWindow.open(marker.map, marker);
     });
 
     const carIcon = document.createElement('img');
